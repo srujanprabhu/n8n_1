@@ -1,1 +1,364 @@
-Okay, I am ready. Please provide the company domain.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relu Consultancy Company Report</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3 {
+            color: #0056b3;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            margin-top: 20px;
+        }
+        h1 {
+            text-align: center;
+            border-bottom: 4px solid #007bff;
+            margin-bottom: 20px;
+        }
+        section {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #e9e9e9;
+            border-radius: 5px;
+        }
+        section h2 {
+             border-bottom: 2px solid #d3d3d3;
+        }
+        .editable {
+            border: 1px dashed #ccc;
+            padding: 5px;
+            margin-bottom: 10px;
+            min-height: 20px;
+        }
+        .editable:focus {
+            outline: none;
+            border-color: #007bff;
+            background-color: #fff;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        ul li {
+            background: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+            border-left: 5px solid #007bff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: grab; /* Indicate draggable */
+        }
+        ul li:active {
+             cursor: grabbing;
+        }
+        .remove-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8em;
+        }
+        .remove-btn:hover {
+            background-color: #c82333;
+        }
+        .add-item {
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+        }
+        .add-item input[type="text"] {
+            padding: 8px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            flex-grow: 1;
+            width: calc(100% - 80px); /* Adjust based on button size */
+        }
+        .add-item button {
+            padding: 8px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .add-item button:hover {
+            background-color: #218838;
+        }
+        .list-item-content {
+            flex-grow: 1;
+            padding-right: 10px;
+        }
+        .list-item-content[contenteditable="true"] {
+            border: 1px dashed #aaa;
+            padding: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Relu Consultancy Company Report</h1>
+        </header>
+
+        <main>
+            <section>
+                <h2>Company Identification & Industry</h2>
+                <p><strong>Company Name:</strong> <span contenteditable="true">Relu Consultancy</span></p>
+                <p><strong>Apollo.io Industry Label:</strong> <span contenteditable="true">Software Development / Data Extraction Services</span></p>
+                <p><strong>Estimated Employee Count:</strong> <span contenteditable="true">51 - 200</span></p>
+                 <p><strong>LinkedIn Page:</strong> <span contenteditable="true"><a href="https://www.linkedin.com/company/reluconsultancy/" target="_blank">https://www.linkedin.com/company/reluconsultancy/</a></span> (Simulated/Inferred)</p>
+            </section>
+
+             <section>
+                <h2>LinkedIn Details (Simulated/Inferred)</h2>
+                <p><strong>LinkedIn Description:</strong></p>
+                <div class="editable" contenteditable="true">
+                    Relu Consultancy specializes in expert web scraping and automation services globally. We help businesses level up their brand and achieve significant growth through efficient data extraction and process automation. Our solutions are designed to provide heavy lifting for your business foundation, enabling rapid scaling and informed decision-making.
+                </div>
+                <p><strong>Listed Services (from LinkedIn):</strong></p>
+                <ul id="linkedin-services-list">
+                    <li draggable="true"><span class="list-item-content" contenteditable="true">Web Scraping & Data Extraction</span> <button class="remove-btn">Remove</button></li>
+                    <li draggable="true"><span class="list-item-content" contenteditable="true">Business Process Automation (RPA)</span> <button class="remove-btn">Remove</button></li>
+                    <li draggable="true"><span class="list-item-content" contenteditable="true">Custom API Development</span> <button class="remove-btn">Remove</button></li>
+                     <li draggable="true"><span class="list-item-content" contenteditable="true">Lead Generation Solutions</span> <button class="remove-btn">Remove</button></li>
+                    <li draggable="true"><span class="list-item-content" contenteditable="true">Data Solutions for AI/ML</span> <button class="remove-btn">Remove</button></li>
+                </ul>
+                 <div class="add-item">
+                    <input type="text" class="add-input" placeholder="Add LinkedIn Service">
+                    <button class="add-button">Add Service</button>
+                </div>
+            </section>
+
+            <section>
+                <h2>Company Overview & Summary (Business Development Context)</h2>
+                <div class="editable" contenteditable="true">
+                    Relu Consultancy provides expert web scraping and automation services designed to unlock valuable data and streamline business operations. They offer a range of solutions including custom APIs, pre-built tools, and robotic process automation across diverse industries. Their core value proposition lies in doing the "heavy lifting" of data acquisition and process automation, allowing clients to gain competitive insights, improve efficiency, and drive significant business growth globally.
+                </div>
+            </section>
+
+            <section>
+                <h2>Services Offered (Detailed)</h2>
+                <ul id="detailed-services-list">
+                    <li draggable="true"><span class="list-item-content" contenteditable="true">Pre-Built APIs (Instant Functionality)</span> <button class="remove-btn">Remove</button></li>
+                    <li draggable="true"><span class="list-item-content" contenteditable="true">Customized Solutions & API Development (Crawling APIs, Server Hosted, RPA, Bots)</span> <button class="remove-btn">Remove</button></li>
+                    <li draggable="true"><span class="list-item-content" contenteditable="true">Automation (NLP capabilities)</span> <button class="remove-btn">Remove</button></li>
+                    <li draggable="true"><span class="list-item-content" contenteditable="true">Web Scraping & Data Extraction</span> <button class="remove-btn">Remove</button></li>
+                    <li draggable="true"><span class="list-item-content" contenteditable="true">Web Crawling Solutions</span> <button class="remove-btn">Remove</button></li>
+                    <li draggable="true"><span class="list-item-content" contenteditable="true">No-code Automation</span> <button class="remove-btn">Remove</button></li>
+                    <li draggable="true"><span class="list-item-content" contenteditable="true">CRM Solutions Development</span> <button class="remove-btn">Remove</button></li>
+                    <li draggable="true"><span class="list-item-content" contenteditable="true">Resource Augmentation</span> <button class="remove-btn">Remove</button></li>
+                    <li draggable="true"><span class="list-item-content" contenteditable="true">Datasets Store</span> <button class="remove-btn">Remove</button></li>
+                     <li draggable="true"><span class="list-item-content" contenteditable="true">Scraping APIs</span> <button class="remove-btn">Remove</button></li>
+                     <li draggable="true"><span class="list-item-content" contenteditable="true">Robot Process Automation (RPA)</span> <button class="remove-btn">Remove</button></li>
+                      <li draggable="true"><span class="list-item-content" contenteditable="true">Sales Lead - Qualified Leads</span> <button class="remove-btn">Remove</button></li>
+                </ul>
+                 <div class="add-item">
+                    <input type="text" class="add-input" placeholder="Add Detailed Service">
+                    <button class="add-button">Add Service</button>
+                </div>
+            </section>
+
+            <section>
+                <h2>Target Market Analysis</h2>
+
+                <h3>Ranked Target Industries (Industries Relu Consultancy Sells To)</h3>
+                <ul id="target-industries-list">
+                    <li draggable="true"><span class="list-item-content" contenteditable="true">1. E-commerce</span> <button class="remove-btn">Remove</button></li>
+                    <li draggable="true"><span class="list-item-content" contenteditable="true">2. Real Estate</span> <button class="remove-btn">Remove</button></li>
+                    <li draggable="true"><span class="list-item-content" contenteditable="true">3. Financial Services / National Stocks</span> <button class="remove-btn">Remove</button></li>
+                     <li draggable="true"><span class="list-item-content" contenteditable="true">4. Sales / Lead Generation</span> <button class="remove-btn">Remove</button></li>
+                    <li draggable="true"><span class="list-item-content" contenteditable="true">5. Recruitment</span> <button class="remove-btn">Remove</button></li>
+                    <li draggable="true"><span class="list-item-content" contenteditable="true">6. Social Media / Marketing</span> <button class="remove-btn">Remove</button></li>
+                    <li draggable="true"><span class="list-item-content" contenteditable="true">7. AI / Machine Learning Companies</span> <button class="remove-btn">Remove</button></li>
+                     <li draggable="true"><span class="list-item-content" contenteditable="true">8. Travel</span> <button class="remove-btn">Remove</button></li>
+                     <li draggable="true"><span class="list-item-content" contenteditable="true">9. News / Media</span> <button class="remove-btn">Remove</button></li>
+                     <li draggable="true"><span class="list-item-content" contenteditable="true">10. Consulting / Market Research</span> <button class="remove-btn">Remove</button></li>
+                </ul>
+                 <div class="add-item">
+                    <input type="text" class="add-input" placeholder="Add Target Industry (e.g., 11. New Industry)">
+                    <button class="add-button">Add Industry</button>
+                </div>
+
+                <h3>Ideal Customer Size Segments (Apollo.io Filter)</h3>
+                <ul id="customer-size-list">
+                    <li draggable="true"><span class="list-item-content" contenteditable="true">51 - 200 Employees (Prioritized)</span> <button class="remove-btn">Remove</button></li>
+                    <li draggable="true"><span class="list-item-content" contenteditable="true">201 - 500 Employees</span> <button class="remove-btn">Remove</button></li>
+                    <li draggable="true"><span class="list-item-content" contenteditable="true">11 - 50 Employees (For specific project needs)</span> <button class="remove-btn">Remove</button></li>
+                    <li draggable="true"><span class="list-item-content" contenteditable="true">501 - 1000+ Employees</span> <button class="remove-btn">Remove</button></li>
+                </ul>
+                 <div class="add-item">
+                    <input type="text" class="add-input" placeholder="Add Customer Size Segment">
+                    <button class="add-button">Add Size</button>
+                </div>
+
+                <h3>Ideal Buyer Locations (Regions/Countries)</h3>
+                 <ul id="buyer-locations-list">
+                    <li draggable="true"><span class="list-item-content" contenteditable="true">USA (Prioritized)</span> <button class="remove-btn">Remove</button></li>
+                    <li draggable="true"><span class="list-item-content" contenteditable="true">UK (Prioritized)</span> <button class="remove-btn">Remove</button></li>
+                     <li draggable="true"><span class="list-item-content" contenteditable="true">India</span> <button class="remove-btn">Remove</button></li>
+                    <li draggable="true"><span class="list-item-content" contenteditable="true">Western Europe</span> <button class="remove-btn">Remove</button></li>
+                     <li draggable="true"><span class="list-item-content" contenteditable="true">Canada</span> <button class="remove-btn">Remove</button></li>
+                     <li draggable="true"><span class="list-item-content" contenteditable="true">Australia</span> <button class="remove-btn">Remove</button></li>
+                    <li draggable="true"><span class="list-item-content" contenteditable="true">Globally (General)</span> <button class="remove-btn">Remove</button></li>
+                </ul>
+                 <div class="add-item">
+                    <input type="text" class="add-input" placeholder="Add Buyer Location">
+                    <button class="add-button">Add Location</button>
+                </div>
+
+                <h3>Relevant Apollo.io Buyer Intent Keywords</h3>
+                <ul id="intent-keywords-list">
+                    <li draggable="true"><span class="list-item-content" contenteditable="true">web scraping service</span> <button class="remove-btn">Remove</button></li>
+                    <li draggable="true"><span class="list-item-content" contenteditable="true">data extraction API</span> <button class="remove-btn">Remove</button></li>
+                    <li draggable="true"><span class="list-item-content" contenteditable="true">automation consulting</span> <button class="remove-btn">Remove</button></li>
+                    <li draggable="true"><span class="list-item-content" contenteditable="true">RPA implementation</span> <button class="remove-btn">Remove</button></li>
+                    <li draggable="true"><span class="list-item-content" contenteditable="true">lead generation automation</span> <button class="remove-btn">Remove</button></li>
+                     <li draggable="true"><span class="list-item-content" contenteditable="true">e-commerce data scraping</span> <button class="remove-btn">Remove</button></li>
+                    <li draggable="true"><span class="list-item-content" contenteditable="true">real estate data analysis</span> <button class="remove-btn">Remove</button></li>
+                    <li draggable="true"><span class="list-item-content" contenteditable="true">market data API</span> <button class="remove-btn">Remove</button></li>
+                     <li draggable="true"><span class="list-item-content" contenteditable="true">competitive pricing data</span> <button class="remove-btn">Remove</button></li>
+                     <li draggable="true"><span class="list-item-content" contenteditable="true">alternative data provider</span> <button class="remove-btn">Remove</button></li>
+                </ul>
+                 <div class="add-item">
+                    <input type="text" class="add-input" placeholder="Add Intent Keyword">
+                    <button class="add-button">Add Keyword</button>
+                </div>
+            </section>
+
+             <section>
+                <h2>Apollo Contact List Targeting Guidance</h2>
+                 <div class="editable" contenteditable="true">
+                    Utilize the information above to build targeted contact lists on Apollo.io. Filter by the ranked Target Industries, Ideal Customer Size Segments, and Ideal Buyer Locations. Further refine lists by searching for contacts with titles relevant to data, analytics, sales operations, marketing, IT, or business intelligence roles (e.g., Data Analyst, Head of Sales Ops, Marketing Manager, CTO, Business Intelligence Lead). Use the Buyer Intent Keywords to identify companies actively searching for related solutions. Prioritize based on industry ranking and company size segments.
+                </div>
+            </section>
+
+        </main>
+
+        <footer>
+            <p style="text-align: center; margin-top: 40px; font-size: 0.9em; color: #666;">Report generated based on provided text and simulated external research.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Make editable sections work
+            document.querySelectorAll('.editable').forEach(element => {
+                element.contentEditable = true;
+            });
+
+            // Add event listeners for remove buttons on lists
+            document.querySelectorAll('ul').forEach(ul => {
+                ul.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('remove-btn')) {
+                        e.target.closest('li').remove();
+                    }
+                });
+            });
+
+            // Add event listeners for add buttons
+            document.querySelectorAll('.add-item button').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const addItemDiv = e.target.closest('.add-item');
+                    const input = addItemDiv.querySelector('.add-input');
+                    const ul = addItemDiv.previousElementSibling; // The ul is right before the add-item div
+
+                    const newItemText = input.value.trim();
+
+                    if (newItemText) {
+                        const li = document.createElement('li');
+                        li.setAttribute('draggable', 'true'); // Make new items draggable too
+                        li.innerHTML = `<span class="list-item-content" contenteditable="true">${escapeHTML(newItemText)}</span> <button class="remove-btn">Remove</button>`;
+                        ul.appendChild(li);
+                        input.value = ''; // Clear the input
+                    }
+                });
+            });
+
+             // Simple HTML escaping function
+            function escapeHTML(str) {
+                const div = document.createElement('div');
+                div.appendChild(document.createTextNode(str));
+                return div.innerHTML;
+            }
+
+            // Basic Drag and Drop for list items
+            let draggedItem = null;
+
+            document.querySelectorAll('ul').forEach(ul => {
+                 ul.addEventListener('dragstart', (e) => {
+                    if (e.target.tagName === 'LI') {
+                        draggedItem = e.target;
+                        setTimeout(() => {
+                            draggedItem.style.display = 'none';
+                        }, 0);
+                        e.dataTransfer.effectAllowed = 'move';
+                        e.dataTransfer.setData('text/html', draggedItem.innerHTML); // Necessary for some browsers
+                    }
+                });
+
+                ul.addEventListener('dragover', (e) => {
+                    e.preventDefault(); // Necessary to allow dropping
+                    e.dataTransfer.dropEffect = 'move';
+
+                    const targetItem = e.target.closest('li');
+                    if (targetItem && targetItem !== draggedItem) {
+                        // Get the bounding box of the target element
+                        const rect = targetItem.getBoundingClientRect();
+                        // Determine the vertical middle point
+                        const middleY = rect.top + rect.height / 2;
+
+                        // Append before or after based on mouse position relative to the middle
+                        if (e.clientY < middleY) {
+                            ul.insertBefore(draggedItem, targetItem);
+                        } else {
+                            ul.insertBefore(draggedItem, targetItem.nextSibling);
+                        }
+                    }
+                });
+
+                ul.addEventListener('dragleave', (e) => {
+                    // Optional: Add styling to indicate drag leave
+                });
+
+                ul.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                     if (draggedItem) {
+                        draggedItem.style.display = 'flex'; // Show the item again
+                        draggedItem = null;
+                    }
+                });
+
+                ul.addEventListener('dragend', (e) => {
+                    if (draggedItem) {
+                         draggedItem.style.display = 'flex'; // Ensure it's visible even if drop failed
+                         draggedItem = null;
+                    }
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>
