@@ -3,297 +3,379 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Company Business Development Report</title>
+    <title>Company Research Report - Relu Consultancy</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
         body {
-            font-family: sans-serif;
+            font-family: 'Roboto', sans-serif;
             line-height: 1.6;
-            margin: 20px;
-            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f7f6;
             color: #333;
         }
+
         .container {
             max-width: 900px;
-            margin: auto;
+            margin: 20px auto;
             background: #fff;
-            padding: 20px 30px;
+            padding: 30px;
             border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
-        h1, h2 {
+
+        h1, h2, h3 {
             color: #0056b3;
-            border-bottom: 2px solid #0056b3;
+            border-bottom: 2px solid #007bff;
             padding-bottom: 5px;
-            margin-top: 20px;
+            margin-bottom: 20px;
         }
+
         h1 {
             text-align: center;
             border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 30px;
+            color: #007bff;
         }
+
         section {
             margin-bottom: 30px;
-            padding: 15px;
-            background-color: #e9e9e9;
-            border-radius: 5px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
         }
-        section h2 {
-            margin-top: 0;
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 5px;
+
+        section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
         }
+
+        p[contenteditable="true"],
+        li[contenteditable="true"] {
+            border: 1px dashed transparent;
+            padding: 5px;
+            transition: border-color 0.3s ease;
+        }
+
+        p[contenteditable="true"]:hover,
+        li[contenteditable="true"]:hover {
+            border-color: #ccc;
+        }
+
+        p[contenteditable="true"]:focus,
+        li[contenteditable="true"]:focus {
+            border-color: #007bff;
+            outline: none;
+            background-color: #eef5ff;
+        }
+
         ul {
             list-style: none;
             padding: 0;
         }
-        ul li {
-            background: #f9f9f9;
+
+        li {
+            background: #e9ecef;
             margin-bottom: 8px;
-            padding: 10px;
-            border: 1px solid #ddd;
+            padding: 10px 15px;
             border-radius: 4px;
+            cursor: grab;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            cursor: grab; /* Indicate draggable */
-        }
-        ul li.sortable-chosen {
-             background-color: #cfe2ff; /* Highlight during drag */
-        }
-        .editable-list li {
-            cursor: text; /* Indicate editable */
-        }
-        .editable-list li:focus {
-             outline: 1px dashed #0056b3;
+            transition: background-color 0.3s ease, transform 0.1s ease;
         }
 
-        .remove-btn {
-            background-color: #dc3545;
-            color: white;
+        li:active {
+            cursor: grabbing;
+            transform: scale(1.02);
+            background-color: #dee2e6;
+        }
+
+        .dragged {
+            opacity: 0.5;
+            background-color: #ced4da;
+        }
+
+        .list-controls {
+            display: flex;
+            gap: 5px;
+        }
+
+        .add-item, .remove-item {
+            background: none;
             border: none;
-            padding: 4px 8px;
-            border-radius: 4px;
             cursor: pointer;
-            font-size: 0.8em;
-            margin-left: 10px;
+            font-size: 18px;
+            padding: 0 5px;
+            color: #007bff;
+            transition: color 0.2s ease;
         }
-         .remove-btn:hover {
-            background-color: #c82333;
+
+        .add-item:hover {
+            color: #28a745;
         }
-        .add-btn {
+
+        .remove-item:hover {
+            color: #dc3545;
+        }
+
+        .add-new-btn {
+            display: block;
+            margin-top: 15px;
+            padding: 10px 15px;
             background-color: #28a745;
             color: white;
             border: none;
-            padding: 8px 15px;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 0.9em;
-            margin-top: 10px;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
         }
-         .add-btn:hover {
+
+        .add-new-btn:hover {
             background-color: #218838;
         }
-        p, div[contenteditable="true"] {
-            padding: 10px;
-            border: 1px dashed transparent; /* Invisible border */
-            border-radius: 4px;
-        }
-         p:focus, div[contenteditable="true"]:focus {
-            border-color: #007bff; /* Visible border on focus */
-            background-color: #eef7ff;
-            outline: none;
+
+        a {
+            color: #007bff;
+            text-decoration: none;
         }
 
-        /* Styling for contenteditable sections */
-        .editable-content {
-             border: 1px dashed #ccc;
-             padding: 10px;
-             border-radius: 4px;
-             min-height: 30px; /* Ensure clickability */
-             margin-bottom: 10px;
+        a:hover {
+            text-decoration: underline;
         }
-        .editable-content:focus {
-             border-color: #007bff;
-             background-color: #eef7ff;
-             outline: none;
+
+        .label {
+            font-weight: bold;
+            margin-right: 5px;
         }
-         .list-item-content {
-            flex-grow: 1; /* Allows content to take available space */
-         }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            h2 {
+                font-size: 1.4em;
+            }
+            li {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .list-controls {
+                margin-top: 5px;
+            }
+        }
     </style>
-     <!-- SortableJS CDN for drag-and-drop reordering -->
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
 </head>
 <body>
+    <div class="container">
+        <h1>Company Research Report</h1>
 
-<div class="container">
+        <section>
+            <h2>Company: Relu Consultancy</h2>
+            <p><span class="label">Domain:</span> reluconsultancy.com</p>
+            <p><span class="label">Apollo.io Industry Label:</span> Management Consulting</p>
+            <p><span class="label">Estimated Employee Count:</span> 1-10</p>
+            <p><span class="label">LinkedIn Page:</span> <a href="https://www.linkedin.com/company/relu-consultancy/" target="_blank">https://www.linkedin.com/company/relu-consultancy/</a></p>
+        </section>
 
-    <h1>Company Business Development Report</h1>
+        <section>
+            <h2>Company Overview (Business Development Context)</h2>
+            <p contenteditable="true">Relu Consultancy specializes in helping businesses navigate complex change and improve operational efficiency. They offer expert services in areas like business process improvement, digital transformation, and strategic change management. Their value proposition centers on delivering practical, sustainable solutions that enhance performance and facilitate smooth transitions for their clients.</p>
+        </section>
 
-    <section>
-        <h2>Apollo.io Industry Label</h2>
-        <!-- Make content editable -->
-        <div contenteditable="true" class="editable-content">Business Consulting and Services</div>
-    </section>
-
-    <section>
-        <h2>Business Summary (for Biz Dev)</h2>
-        <!-- Make content editable -->
-        <div contenteditable="true" class="editable-content">Relu Consultancy is a business and technology consulting firm that specializes in helping organizations navigate complex challenges. They offer expertise in areas like data analytics, AI/ML, cloud migration, and strategic business transformation. Their services are designed to improve operational efficiency, leverage technology for growth, and provide actionable insights for decision-making, catering to businesses looking to enhance their digital capabilities and strategic direction.</div>
-    </section>
-
-     <section>
-        <h2>Estimated Employee Headcount</h2>
-         <!-- Make content editable -->
-        <div contenteditable="true" class="editable-content">11-50</div>
-    </section>
-
-    <section>
-        <h2>LinkedIn Page</h2>
-         <!-- Make content editable -->
-        <div contenteditable="true" class="editable-content"><a href="https://www.linkedin.com/company/reluconsultancy/" target="_blank">https://www.linkedin.com/company/reluconsultancy/</a></div>
-         <p>Details: As of search date, approx. 11-50 employees listed. Focus on Business & Technology Consulting.</p> <!-- You can add more details found here -->
-    </section>
-
-    <section>
-        <h2>Services Offered</h2>
-        <ul id="services-list" class="editable-list">
-             <!-- Items are contenteditable and can be removed -->
-            <li><span class="list-item-content" contenteditable="true">Data & Analytics</span> <button class="remove-btn">Remove</button></li>
-            <li><span class="list-item-content" contenteditable="true">AI & Machine Learning</span> <button class="remove-btn">Remove</button></li>
-            <li><span class="list-item-content" contenteditable="true">Cloud Computing</span> <button class="remove-btn">Remove</button></li>
-            <li><span class="list-item-content" contenteditable="true">Business Transformation</span> <button class="remove-btn">Remove</button></li>
-            <li><span class="list-item-content" contenteditable="true">Strategy Consulting</span> <button class="remove-btn">Remove</button></li>
-            <li><span class="list-item-content" contenteditable="true">CRM Implementation/Strategy</span> <button class="remove-btn">Remove</button></li>
-             <!-- Add more services as found -->
-        </ul>
-         <button id="add-service-btn" class="add-btn">Add Service</button>
-    </section>
-
-    <section>
-        <h2>Target Industries (Ranked by Priority)</h2>
-        <!-- List items are draggable and contenteditable -->
-        <ul id="industries-list">
-            <li><span class="list-item-content" contenteditable="true">Technology</span></li>
-            <li><span class="list-item-content" contenteditable="true">Financial Services</span></li>
-            <li><span class="list-item-content" contenteditable="true">Healthcare</span></li>
-            <li><span class="list-item-content" contenteditable="true">Retail & E-commerce</span></li>
-            <li><span class="list-item-content" contenteditable="true">Manufacturing</span></li>
-            <li><span class="list-item-content" contenteditable="true">Professional Services</span></li>
-             <!-- Add/Remove/Reorder as needed -->
-        </ul>
-         <p style="font-size: 0.9em; color: #555;">Drag list items to reorder priority.</p>
-    </section>
-
-    <section>
-        <h2>Apollo.io Filters for Buyers</h2>
-
-        <h3>Employee Count Selection Filters</h3>
-         <!-- Make content editable -->
-        <div contenteditable="true" class="editable-content">
-            <ul>
-                <li>51-200</li>
-                <li>201-500</li>
-                <li>501-1000</li>
-                <li>1001-5000</li>
-                <li>5001-10000</li>
-                <li>10001+</li>
-                 <!-- Adjust ranges based on target market -->
+        <section>
+            <h2>Services Offered</h2>
+            <p><span class="label">From LinkedIn:</span> Change Management, Business Process Improvement, Digital Transformation, Programme Management, Portfolio Management, Project Management, Consulting, Training.</p>
+            <h3>Key Services (Editable & Rearrangeable)</h3>
+            <ul id="services-list">
+                <li contenteditable="true" draggable="true">Business Process Improvement</li>
+                <li contenteditable="true" draggable="true">Digital Transformation</li>
+                <li contenteditable="true" draggable="true">Change Management</li>
+                <li contenteditable="true" draggable="true">Programme/Project Management</li>
+                <li contenteditable="true" draggable="true">Strategic Consulting</li>
             </ul>
-        </div>
+            <button class="add-new-btn" onclick="addListItem('services-list', 'New Service')">Add New Service</button>
+        </section>
 
-        <h3>Locations for Buyers</h3>
-         <!-- Make content editable -->
-        <div contenteditable="true" class="editable-content">
-            <ul>
-                <li>United Kingdom (Primary)</li>
-                <li>Europe</li>
-                <li>North America</li>
-                 <!-- Adjust locations based on service reach -->
+        <section>
+            <h2>Target Market Analysis</h2>
+
+            <h3>Ranked Target Industries (Editable & Rearrangeable)</h3>
+            <ul id="industries-list">
+                <li contenteditable="true" draggable="true">1. Financial Services</li>
+                <li contenteditable="true" draggable="true">2. Healthcare</li>
+                <li contenteditable="true" draggable="true">3. Professional Services</li>
+                <li contenteditable="true" draggable="true">4. Technology</li>
+                <li contenteditable="true" draggable="true">5. Manufacturing</li>
+                <li contenteditable="true" draggable="true">6. Retail</li>
             </ul>
-        </div>
+             <button class="add-new-btn" onclick="addListItem('industries-list', 'New Industry')">Add New Industry</button>
 
-        <h3>Keywords for Buyers</h3>
-         <!-- Make content editable -->
-        <div contenteditable="true" class="editable-content">
-            <ul>
-                <li>Data Strategy</li>
-                <li>Analytics</li>
-                <li>Artificial Intelligence</li>
-                <li>Machine Learning</li>
-                <li>Cloud Migration</li>
-                <li>Digital Transformation</li>
-                <li>Business Process Improvement</li>
-                <li>CRM Strategy</li>
-                <li>Chief Data Officer (CDO)</li>
-                <li>Chief Technology Officer (CTO)</li>
-                <li>Chief Operating Officer (COO)</li>
-                <li>Head of Analytics</li>
-                <li>Head of IT</li>
-                 <!-- Add/Remove keywords relevant to services -->
+            <h3>Ideal Customer Company Sizes (Apollo Filters)</h3>
+            <p contenteditable="true">Ideal sizes likely include companies large enough to need structured change and process work but potentially overlooked by larger consultancies. Potential sweet spots: 51-200, 201-500, 501-1000 employees. Can also target larger enterprises for specific divisional projects or smaller businesses (11-50) for focused process improvements.</p>
+
+            <h3>Ideal Buyer Locations</h3>
+            <p contenteditable="true">Based on current focus: United Kingdom. Potential expansion or remote work targets: Western Europe, potentially North America.</p>
+
+            <h3>Relevant Apollo.io Buyer Intent Keywords (Editable)</h3>
+            <ul id="keywords-list">
+                <li contenteditable="true">business process consulting</li>
+                <li contenteditable="true">digital transformation services</li>
+                <li contenteditable="true">change management consultant</li>
+                <li contenteditable="true">operational efficiency improvement</li>
+                <li contenteditable="true">ERP implementation help</li>
+                <li contenteditable="true">process automation consultant</li>
+                <li contenteditable="true">business process re-engineering</li>
             </ul>
-        </div>
-    </section>
+             <button class="add-new-btn" onclick="addListItem('keywords-list', 'New Keyword')">Add New Keyword</button>
+        </section>
 
-    <!-- Note: Generating contact lists via code here is not possible as it requires Apollo.io API access and user authentication.
-         The sections above provide the necessary data to be *used* in Apollo.io to create lists. -->
+        <section>
+            <h2>Apollo Contact List Targeting Guidance</h2>
+            <p contenteditable="true">To create target contact lists in Apollo.io, use the gathered ICP data: Filter by industries (Financial Services, Healthcare, etc.), company sizes (select multiple ranges like 51-200, 201-500), and locations (United Kingdom, Western Europe). Further refine lists using buyer intent keywords. Look for roles involved in operations, strategy, change, digital transformation, or IT leadership (e.g., COO, Head of Change, Digital Transformation Lead, IT Director, Process Improvement Manager).</p>
+        </section>
 
-</div>
+    </div>
 
-<script>
-    // Initialize SortableJS on the industries list
-    const industriesList = document.getElementById('industries-list');
-    if (industriesList) {
-        new Sortable(industriesList, {
-            animation: 150, // ms, number defining the speed of the animation.
-            ghostClass: 'sortable-ghost', // Class name for the drop placeholder
-             chosenClass: 'sortable-chosen', // Class name for the chosen item
-             dragClass: 'sortable-drag' // Class name for the dragging item
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Make paragraphs editable
+            document.querySelectorAll('p[contenteditable="true"]').forEach(p => {
+                // Add focus/blur events for potential styling changes
+                p.addEventListener('focus', () => p.style.borderColor = '#007bff');
+                p.addEventListener('blur', () => p.style.borderColor = 'transparent');
+            });
+
+            // Add drag-and-drop and remove functionality to list items
+            document.querySelectorAll('ul').forEach(ul => {
+                ul.addEventListener('click', (event) => {
+                    if (event.target.classList.contains('remove-item')) {
+                        event.target.closest('li').remove();
+                    }
+                });
+
+                // Add remove button to existing items
+                ul.querySelectorAll('li').forEach(li => {
+                     if (!li.querySelector('.list-controls')) {
+                        addRemoveButton(li);
+                     }
+                });
+
+                // Drag and drop functionality
+                let draggedItem = null;
+
+                ul.addEventListener('dragstart', (event) => {
+                    draggedItem = event.target;
+                    if (draggedItem.tagName === 'LI') {
+                         setTimeout(() => {
+                            draggedItem.classList.add('dragged');
+                         }, 0); // Allow element to be copied before hiding
+                         event.dataTransfer.effectAllowed = 'move';
+                         event.dataTransfer.setData('text/html', draggedItem.innerHTML); // Required for Firefox
+                    } else {
+                        event.preventDefault(); // Only allow LI to be draggable
+                    }
+                });
+
+                 ul.addEventListener('dragover', (event) => {
+                    event.preventDefault(); // Necessary to allow dropping
+                    event.dataTransfer.dropEffect = 'move';
+
+                    const targetItem = event.target.closest('li');
+                    if (targetItem && targetItem !== draggedItem) {
+                        const boundingBox = targetItem.getBoundingClientRect();
+                        const offset = boundingBox.y + (boundingBox.height / 2);
+                        if (event.clientY > offset) {
+                            // Dragging below the target item
+                            targetItem.parentNode.insertBefore(draggedItem, targetItem.nextSibling);
+                        } else {
+                            // Dragging above the target item
+                            targetItem.parentNode.insertBefore(draggedItem, targetItem);
+                        }
+                    }
+                });
+
+                 ul.addEventListener('dragleave', (event) => {
+                     // Optional: Add visual feedback when dragging leaves an area
+                 });
+
+                ul.addEventListener('dragend', (event) => {
+                    if (draggedItem) {
+                        draggedItem.classList.remove('dragged');
+                        draggedItem = null;
+                    }
+                });
+
+                ul.addEventListener('drop', (event) => {
+                    event.preventDefault();
+                    // Dragover handles the actual insertion, drop just finalizes (if needed)
+                    // No extra steps needed here for this simple case as dragover handles placement
+                });
+            });
         });
-    }
 
-    // Add functionality for services list (add/remove) and contenteditable
-    const servicesList = document.getElementById('services-list');
-    const addServiceBtn = document.getElementById('add-service-btn');
-
-    // Add remove button functionality
-    servicesList.addEventListener('click', function(event) {
-        if (event.target.classList.contains('remove-btn')) {
-            event.target.parentElement.remove();
+        function addRemoveButton(li) {
+             if (!li.querySelector('.list-controls')) {
+                const controls = document.createElement('span');
+                controls.classList.add('list-controls');
+                const removeButton = document.createElement('button');
+                removeButton.classList.add('remove-item');
+                removeButton.innerHTML = '&times;'; // Times symbol
+                removeButton.setAttribute('title', 'Remove item');
+                controls.appendChild(removeButton);
+                li.appendChild(controls);
+             }
         }
-    });
 
-    // Add new service functionality
-    addServiceBtn.addEventListener('click', function() {
-        const newServiceText = prompt("Enter new service name:");
-        if (newServiceText) {
-            const newLi = document.createElement('li');
-            newLi.classList.add('editable-list'); // Keep class for consistency
-            newLi.innerHTML = `<span class="list-item-content" contenteditable="true">${escapeHTML(newServiceText)}</span> <button class="remove-btn">Remove</button>`;
-            servicesList.appendChild(newLi);
+
+        function addListItem(ulId, defaultText = 'New Item') {
+            const ul = document.getElementById(ulId);
+            const li = document.createElement('li');
+            li.setAttribute('contenteditable', 'true');
+            if (ulId !== 'keywords-list') { // Keywords don't need to be reordered typically
+                 li.setAttribute('draggable', 'true');
+            }
+            li.textContent = defaultText;
+
+            // Add remove button
+            addRemoveButton(li);
+
+            ul.appendChild(li);
+
+            // Add drag-and-drop event listeners to the new item if applicable
+            if (ulId !== 'keywords-list') {
+                let draggedItem = null; // Need to manage state per drag
+                 li.addEventListener('dragstart', (event) => {
+                    draggedItem = event.target;
+                     setTimeout(() => {
+                        draggedItem.classList.add('dragged');
+                     }, 0);
+                     event.dataTransfer.effectAllowed = 'move';
+                     event.dataTransfer.setData('text/html', draggedItem.innerHTML);
+                 });
+
+                  li.addEventListener('dragend', (event) => {
+                    if (draggedItem) {
+                        draggedItem.classList.remove('dragged');
+                        draggedItem = null;
+                    }
+                 });
+            }
+
+             // Auto-focus the new item for editing
+             li.focus();
         }
-    });
 
-    // Basic HTML escaping for safety
-    function escapeHTML(str) {
-        const div = document.createElement('div');
-        div.appendChild(document.createTextNode(str));
-        return div.innerHTML;
-    }
-
-    // Make other relevant text sections contenteditable
-    document.querySelectorAll('.editable-content').forEach(element => {
-        // The contenteditable="true" attribute is already in the HTML
-        // We just need to ensure they are styled and potentially handled for saving if needed later
-        // For this exercise, the attribute alone allows front-end editing
-    });
-
-     // Make list item content within Industries also editable
-     document.querySelectorAll('#industries-list .list-item-content').forEach(element => {
-         element.setAttribute('contenteditable', 'true');
-     });
-
-
-</script>
-
+    </script>
 </body>
 </html>
