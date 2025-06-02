@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Relu Consultancy Business & Target Profile Report</title>
+    <title>Company Business Development Report</title>
     <style>
         body {
             font-family: sans-serif;
             line-height: 1.6;
-            margin: 0;
-            padding: 20px;
+            margin: 20px;
             background-color: #f4f4f4;
             color: #333;
         }
@@ -19,9 +18,9 @@
             background: #fff;
             padding: 20px 30px;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-        h1, h2, h3 {
+        h1, h2 {
             color: #0056b3;
             border-bottom: 2px solid #0056b3;
             padding-bottom: 5px;
@@ -29,151 +28,272 @@
         }
         h1 {
             text-align: center;
-            margin-bottom: 30px;
             border-bottom: none;
-            color: #333;
-        }
-        h2 {
-             margin-top: 30px;
-             border-bottom: 1px solid #eee;
         }
         section {
-            margin-bottom: 25px;
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #e9e9e9;
+            border-radius: 5px;
+        }
+        section h2 {
+            margin-top: 0;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
         }
         ul {
-            padding-left: 20px;
+            list-style: none;
+            padding: 0;
         }
-        li {
+        ul li {
+            background: #f9f9f9;
             margin-bottom: 8px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: grab; /* Indicate draggable */
         }
-        .apollo-label {
-            font-weight: bold;
-            color: #007bff;
+        ul li.sortable-chosen {
+             background-color: #cfe2ff; /* Highlight during drag */
         }
-        .summary {
-            font-style: italic;
-            color: #555;
-            background-color: #eef;
-            padding: 15px;
-            border-left: 4px solid #007bff;
-            margin-bottom: 20px;
+        .editable-list li {
+            cursor: text; /* Indicate editable */
         }
+        .editable-list li:focus {
+             outline: 1px dashed #0056b3;
+        }
+
+        .remove-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+         .remove-btn:hover {
+            background-color: #c82333;
+        }
+        .add-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+         .add-btn:hover {
+            background-color: #218838;
+        }
+        p, div[contenteditable="true"] {
+            padding: 10px;
+            border: 1px dashed transparent; /* Invisible border */
+            border-radius: 4px;
+        }
+         p:focus, div[contenteditable="true"]:focus {
+            border-color: #007bff; /* Visible border on focus */
+            background-color: #eef7ff;
+            outline: none;
+        }
+
+        /* Styling for contenteditable sections */
+        .editable-content {
+             border: 1px dashed #ccc;
+             padding: 10px;
+             border-radius: 4px;
+             min-height: 30px; /* Ensure clickability */
+             margin-bottom: 10px;
+        }
+        .editable-content:focus {
+             border-color: #007bff;
+             background-color: #eef7ff;
+             outline: none;
+        }
+         .list-item-content {
+            flex-grow: 1; /* Allows content to take available space */
+         }
     </style>
+     <!-- SortableJS CDN for drag-and-drop reordering -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>Relu Consultancy Business & Target Profile Report</h1>
 
-        <section>
-            <h2>Company Overview</h2>
-            <p><span class="apollo-label">Apollo.io Industry Label:</span> IT Services and IT Consulting</p>
-            <div class="summary">
-                <p>Relu Consultancy is an IT consulting firm specializing in digital transformation and technology solutions.</p>
-                <p>They help businesses leverage cloud computing, data & AI, and modern software engineering practices to improve operations and drive innovation.</p>
-                <p>Their services also include crucial areas like cybersecurity, ensuring client's digital assets are protected.</p>
-                <p>They aim to be a strategic technology partner for companies looking to navigate complex IT landscapes and achieve their business goals through technology.</p>
-            </div>
-        </section>
+<div class="container">
 
-        <section>
-            <h2>Company Details</h2>
+    <h1>Company Business Development Report</h1>
+
+    <section>
+        <h2>Apollo.io Industry Label</h2>
+        <!-- Make content editable -->
+        <div contenteditable="true" class="editable-content">Business Consulting and Services</div>
+    </section>
+
+    <section>
+        <h2>Business Summary (for Biz Dev)</h2>
+        <!-- Make content editable -->
+        <div contenteditable="true" class="editable-content">Relu Consultancy is a business and technology consulting firm that specializes in helping organizations navigate complex challenges. They offer expertise in areas like data analytics, AI/ML, cloud migration, and strategic business transformation. Their services are designed to improve operational efficiency, leverage technology for growth, and provide actionable insights for decision-making, catering to businesses looking to enhance their digital capabilities and strategic direction.</div>
+    </section>
+
+     <section>
+        <h2>Estimated Employee Headcount</h2>
+         <!-- Make content editable -->
+        <div contenteditable="true" class="editable-content">11-50</div>
+    </section>
+
+    <section>
+        <h2>LinkedIn Page</h2>
+         <!-- Make content editable -->
+        <div contenteditable="true" class="editable-content"><a href="https://www.linkedin.com/company/reluconsultancy/" target="_blank">https://www.linkedin.com/company/reluconsultancy/</a></div>
+         <p>Details: As of search date, approx. 11-50 employees listed. Focus on Business & Technology Consulting.</p> <!-- You can add more details found here -->
+    </section>
+
+    <section>
+        <h2>Services Offered</h2>
+        <ul id="services-list" class="editable-list">
+             <!-- Items are contenteditable and can be removed -->
+            <li><span class="list-item-content" contenteditable="true">Data & Analytics</span> <button class="remove-btn">Remove</button></li>
+            <li><span class="list-item-content" contenteditable="true">AI & Machine Learning</span> <button class="remove-btn">Remove</button></li>
+            <li><span class="list-item-content" contenteditable="true">Cloud Computing</span> <button class="remove-btn">Remove</button></li>
+            <li><span class="list-item-content" contenteditable="true">Business Transformation</span> <button class="remove-btn">Remove</button></li>
+            <li><span class="list-item-content" contenteditable="true">Strategy Consulting</span> <button class="remove-btn">Remove</button></li>
+            <li><span class="list-item-content" contenteditable="true">CRM Implementation/Strategy</span> <button class="remove-btn">Remove</button></li>
+             <!-- Add more services as found -->
+        </ul>
+         <button id="add-service-btn" class="add-btn">Add Service</button>
+    </section>
+
+    <section>
+        <h2>Target Industries (Ranked by Priority)</h2>
+        <!-- List items are draggable and contenteditable -->
+        <ul id="industries-list">
+            <li><span class="list-item-content" contenteditable="true">Technology</span></li>
+            <li><span class="list-item-content" contenteditable="true">Financial Services</span></li>
+            <li><span class="list-item-content" contenteditable="true">Healthcare</span></li>
+            <li><span class="list-item-content" contenteditable="true">Retail & E-commerce</span></li>
+            <li><span class="list-item-content" contenteditable="true">Manufacturing</span></li>
+            <li><span class="list-item-content" contenteditable="true">Professional Services</span></li>
+             <!-- Add/Remove/Reorder as needed -->
+        </ul>
+         <p style="font-size: 0.9em; color: #555;">Drag list items to reorder priority.</p>
+    </section>
+
+    <section>
+        <h2>Apollo.io Filters for Buyers</h2>
+
+        <h3>Employee Count Selection Filters</h3>
+         <!-- Make content editable -->
+        <div contenteditable="true" class="editable-content">
             <ul>
-                <li><span class="apollo-label">Estimated Employee Headcount:</span> 51-200 (based on publicly available data, including LinkedIn)</li>
-                <li><span class="apollo-label">LinkedIn Page:</span> <a href="https://www.linkedin.com/company/relu-consultancy" target="_blank">Relu Consultancy on LinkedIn</a></li>
-                <li><span class="apollo-label">LinkedIn Details:</span> Location: London, UK. Focuses on Digital Transformation, Cloud, Data & AI, Engineering, Cyber Security.</li>
+                <li>51-200</li>
+                <li>201-500</li>
+                <li>501-1000</li>
+                <li>1001-5000</li>
+                <li>5001-10000</li>
+                <li>10001+</li>
+                 <!-- Adjust ranges based on target market -->
             </ul>
-        </section>
+        </div>
 
-        <section>
-            <h2>Services Offered</h2>
+        <h3>Locations for Buyers</h3>
+         <!-- Make content editable -->
+        <div contenteditable="true" class="editable-content">
             <ul>
-                <li>Cloud Solutions (Strategy, Migration, Management)</li>
-                <li>Data & AI (Data Strategy, Analytics, Machine Learning)</li>
+                <li>United Kingdom (Primary)</li>
+                <li>Europe</li>
+                <li>North America</li>
+                 <!-- Adjust locations based on service reach -->
+            </ul>
+        </div>
+
+        <h3>Keywords for Buyers</h3>
+         <!-- Make content editable -->
+        <div contenteditable="true" class="editable-content">
+            <ul>
+                <li>Data Strategy</li>
+                <li>Analytics</li>
+                <li>Artificial Intelligence</li>
+                <li>Machine Learning</li>
+                <li>Cloud Migration</li>
                 <li>Digital Transformation</li>
-                <li>Software Engineering & Delivery (Custom Development, Modernization)</li>
-                <li>Cyber Security (Strategy, Implementation, Compliance)</li>
+                <li>Business Process Improvement</li>
+                <li>CRM Strategy</li>
+                <li>Chief Data Officer (CDO)</li>
+                <li>Chief Technology Officer (CTO)</li>
+                <li>Chief Operating Officer (COO)</li>
+                <li>Head of Analytics</li>
+                <li>Head of IT</li>
+                 <!-- Add/Remove keywords relevant to services -->
             </ul>
-        </section>
+        </div>
+    </section>
 
-        <section>
-            <h2>Target Industries (Ranked by Priority)</h2>
-            <p>Based on their services and common IT consulting targets:</p>
-            <ol>
-                <li>Financial Services</li>
-                <li>Healthcare</li>
-                <li>Public Sector</li>
-                <li>Retail & E-commerce</li>
-                <li>Manufacturing</li>
-            </ol>
-        </section>
+    <!-- Note: Generating contact lists via code here is not possible as it requires Apollo.io API access and user authentication.
+         The sections above provide the necessary data to be *used* in Apollo.io to create lists. -->
 
-        <section>
-            <h2>Ideal Customer Profile for Sales (Apollo.io Filters)</h2>
-            <p>Companies with complex IT needs and budget for strategic consulting:</p>
-            <ul>
-                <li><span class="apollo-label">Apollo.io Employee Count Filters:</span>
-                    <ul>
-                        <li>51-100</li>
-                        <li>101-250</li>
-                        <li>251-500</li>
-                        <li>501-1000</li>
-                        <li>1001-5000</li>
-                        <li>5001-10000+</li>
-                    </ul>
-                </li>
-                 <li><span class="apollo-label">Apollo.io Locations for Buyers:</span>
-                    <ul>
-                        <li>United Kingdom</li>
-                        <li>Ireland</li>
-                        <li>Germany</li>
-                        <li>France</li>
-                        <li>Netherlands</li>
-                        <li>United States (Specifically major financial/tech hubs like New York, California, Illinois)</li>
-                        <li>Canada</li>
-                    </ul>
-                </li>
-                <li><span class="apollo-label">Relevant Apollo.io Keywords (Job Titles/Functions):</span>
-                    <ul>
-                        <li>Chief Information Officer (CIO)</li>
-                        <li>Chief Technology Officer (CTO)</li>
-                        <li>VP of Information Technology</li>
-                        <li>IT Director</li>
-                        <li>Head of Digital Transformation</li>
-                        <li>Chief Digital Officer (CDO)</li>
-                        <li>Chief Data Officer</li>
-                        <li>Head of Cloud</li>
-                        <li>Head of Engineering</li>
-                        <li>Chief Information Security Officer (CISO)</li>
-                        <li>Head of Infrastructure</li>
-                        <li>Data & Analytics Manager</li>
-                        <li>Digital Transformation Manager</li>
-                        <li>Business Unit Head (in targeted industries)</li>
-                    </ul>
-                </li>
-            </ul>
-        </section>
+</div>
 
-         <section>
-            <h2>Apollo.io Contact List Creation Strategy</h2>
-            <p>To create targeted contact lists in Apollo.io for Relu Consultancy, a Business Development Representative would combine the filters identified above:</p>
-            <ol>
-                <li>Select the primary <span class="apollo-label">Industries</span> (e.g., Financial Services, Healthcare).</li>
-                <li>Apply the <span class="apollo-label">Employee Count</span> filters (e.g., 51-100 to 10000+).</li>
-                <li>Specify target <span class="apollo-label">Locations</span> (e.g., United Kingdom, select key US states/cities).</li>
-                <li>Use the <span class="apollo-label">Keywords</span> list to find relevant job titles and functions within the filtered companies (e.g., searching for "CIO", "IT Director", "Head of Digital Transformation").</li>
-                <li>Refine lists based on specific services; for example, focusing on "Head of Cloud" or "CISO" titles for cloud or cybersecurity service lists.</li>
-            </ol>
-        </section>
+<script>
+    // Initialize SortableJS on the industries list
+    const industriesList = document.getElementById('industries-list');
+    if (industriesList) {
+        new Sortable(industriesList, {
+            animation: 150, // ms, number defining the speed of the animation.
+            ghostClass: 'sortable-ghost', // Class name for the drop placeholder
+             chosenClass: 'sortable-chosen', // Class name for the chosen item
+             dragClass: 'sortable-drag' // Class name for the dragging item
+        });
+    }
 
-    </div>
+    // Add functionality for services list (add/remove) and contenteditable
+    const servicesList = document.getElementById('services-list');
+    const addServiceBtn = document.getElementById('add-service-btn');
 
-    <script>
-        // Basic script for demonstration - could add more functionality if needed
-        console.log("Relu Consultancy Report Loaded");
-        // Example: Could add smooth scrolling or interactive elements
-        // document.addEventListener('DOMContentLoaded', (event) => {
-        //     console.log('DOM fully loaded and parsed');
-        // });
-    </script>
+    // Add remove button functionality
+    servicesList.addEventListener('click', function(event) {
+        if (event.target.classList.contains('remove-btn')) {
+            event.target.parentElement.remove();
+        }
+    });
+
+    // Add new service functionality
+    addServiceBtn.addEventListener('click', function() {
+        const newServiceText = prompt("Enter new service name:");
+        if (newServiceText) {
+            const newLi = document.createElement('li');
+            newLi.classList.add('editable-list'); // Keep class for consistency
+            newLi.innerHTML = `<span class="list-item-content" contenteditable="true">${escapeHTML(newServiceText)}</span> <button class="remove-btn">Remove</button>`;
+            servicesList.appendChild(newLi);
+        }
+    });
+
+    // Basic HTML escaping for safety
+    function escapeHTML(str) {
+        const div = document.createElement('div');
+        div.appendChild(document.createTextNode(str));
+        return div.innerHTML;
+    }
+
+    // Make other relevant text sections contenteditable
+    document.querySelectorAll('.editable-content').forEach(element => {
+        // The contenteditable="true" attribute is already in the HTML
+        // We just need to ensure they are styled and potentially handled for saving if needed later
+        // For this exercise, the attribute alone allows front-end editing
+    });
+
+     // Make list item content within Industries also editable
+     document.querySelectorAll('#industries-list .list-item-content').forEach(element => {
+         element.setAttribute('contenteditable', 'true');
+     });
+
+
+</script>
+
 </body>
 </html>
