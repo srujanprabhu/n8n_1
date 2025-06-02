@@ -3,379 +3,410 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Company Research Report - Relu Consultancy</title>
+    <title>Relu Consultancy Report</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
-
+        /* Basic Reset */
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: sans-serif;
             line-height: 1.6;
             margin: 0;
-            padding: 20px;
-            background-color: #f4f7f6;
+            padding: 0;
+            background-color: #f4f4f4;
             color: #333;
         }
 
         .container {
             max-width: 900px;
             margin: 20px auto;
-            background: #fff;
-            padding: 30px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         h1, h2, h3 {
             color: #0056b3;
-            border-bottom: 2px solid #007bff;
+            border-bottom: 2px solid #eee;
             padding-bottom: 5px;
-            margin-bottom: 20px;
+            margin-top: 20px;
         }
 
         h1 {
-            text-align: center;
-            border-bottom: none;
-            padding-bottom: 0;
-            margin-bottom: 30px;
-            color: #007bff;
+            border-bottom: 4px solid #0056b3;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
         }
 
         section {
             margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #eee;
         }
 
-        section:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-
-        p[contenteditable="true"],
-        li[contenteditable="true"] {
-            border: 1px dashed transparent;
+        /* Editable Styles */
+        [contenteditable="true"] {
+            border: 1px dashed transparent; /* Transparent border by default */
             padding: 5px;
-            transition: border-color 0.3s ease;
+            min-width: 100px; /* Ensure it's visible when empty */
+            display: inline-block;
+            margin-bottom: 5px;
+            cursor: text; /* Indicate it's editable */
         }
 
-        p[contenteditable="true"]:hover,
-        li[contenteditable="true"]:hover {
-            border-color: #ccc;
+        [contenteditable="true"]:hover {
+             border-color: #ddd; /* Show border on hover */
         }
 
-        p[contenteditable="true"]:focus,
-        li[contenteditable="true"]:focus {
+        [contenteditable="true"]:focus {
             border-color: #007bff;
             outline: none;
-            background-color: #eef5ff;
+            background-color: #e9f5ff;
         }
 
+        /* Specific styling for larger editable blocks */
+        .editable-block {
+            min-height: 100px;
+            padding: 10px;
+            border: 1px dashed transparent;
+            border-radius: 4px;
+            display: block; /* Make it a block element */
+        }
+
+        .editable-block:hover {
+             border-color: #ddd;
+        }
+
+        .editable-block:focus {
+             border-color: #007bff;
+             outline: none;
+             background-color: #e9f5ff;
+        }
+
+
+        /* List Styles (for draggable items) */
         ul {
             list-style: none;
             padding: 0;
+            margin-top: 15px;
         }
 
         li {
-            background: #e9ecef;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
             margin-bottom: 8px;
-            padding: 10px 15px;
+            padding: 10px;
             border-radius: 4px;
-            cursor: grab;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: background-color 0.3s ease, transform 0.1s ease;
+            transition: background-color 0.2s ease;
         }
 
-        li:active {
-            cursor: grabbing;
-            transform: scale(1.02);
-            background-color: #dee2e6;
+         #services-list li,
+         #industries-list li {
+             cursor: grab; /* Cursor for draggable lists */
+         }
+
+        #services-list li:active,
+        #industries-list li:active {
+             cursor: grabbing;
         }
 
-        .dragged {
+        li.dragging {
             opacity: 0.5;
-            background-color: #ced4da;
+            border-top: 2px dashed #007bff;
+            border-bottom: 2px dashed #007bff;
+            background-color: #e9f5ff;
         }
 
-        .list-controls {
-            display: flex;
-            gap: 5px;
-        }
+         /* Style for list item content - allows inline editing */
+        .list-item-content {
+             flex-grow: 1; /* Take up available space */
+             margin-right: 10px; /* Space between text and delete button */
+             border: 1px dashed transparent; /* Editable style */
+             padding: 0 5px; /* Padding within content */
+             min-width: 50px; /* Ensure space for editing */
+         }
 
-        .add-item, .remove-item {
+        .list-item-content:hover {
+             border-color: #ddd;
+         }
+
+        .list-item-content:focus {
+             border-color: #007bff;
+             outline: none;
+             background-color: #e9f5ff;
+         }
+
+
+        /* Delete Button Styles */
+        .delete-btn {
             background: none;
             border: none;
+            color: #dc3545;
             cursor: pointer;
-            font-size: 18px;
+            font-size: 1.2em; /* Slightly larger icon */
             padding: 0 5px;
-            color: #007bff;
+            line-height: 1; /* Center icon vertically */
             transition: color 0.2s ease;
         }
 
-        .add-item:hover {
-            color: #28a745;
+        .delete-btn:hover {
+            color: #c82333;
         }
 
-        .remove-item:hover {
-            color: #dc3545;
-        }
-
-        .add-new-btn {
-            display: block;
+        /* Add Item Styles */
+        .add-item-form {
             margin-top: 15px;
-            padding: 10px 15px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .add-item-form input[type="text"] {
+            flex-grow: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+
+        .add-item-form button {
+            padding: 8px 15px;
             background-color: #28a745;
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             font-size: 1em;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.2s ease;
         }
 
-        .add-new-btn:hover {
+        .add-item-form button:hover {
             background-color: #218838;
         }
 
-        a {
-            color: #007bff;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        .label {
+        /* Specific Data Point Styling */
+        .data-label {
             font-weight: bold;
             margin-right: 5px;
         }
 
+        .data-value {
+            /* Styles for editable values */
+        }
+
+
+        /* Responsive */
         @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
             .container {
-                padding: 20px;
+                margin: 10px;
+                padding: 15px;
             }
-            h1 {
-                font-size: 1.8em;
-            }
-            h2 {
-                font-size: 1.4em;
-            }
-            li {
+
+            .add-item-form {
                 flex-direction: column;
-                align-items: flex-start;
             }
-            .list-controls {
-                margin-top: 5px;
+
+            .add-item-form button {
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
+
     <div class="container">
-        <h1>Company Research Report</h1>
+        <header>
+            <h1 contenteditable="true">Relu Consultancy Report</h1>
+        </header>
 
         <section>
-            <h2>Company: Relu Consultancy</h2>
-            <p><span class="label">Domain:</span> reluconsultancy.com</p>
-            <p><span class="label">Apollo.io Industry Label:</span> Management Consulting</p>
-            <p><span class="label">Estimated Employee Count:</span> 1-10</p>
-            <p><span class="label">LinkedIn Page:</span> <a href="https://www.linkedin.com/company/relu-consultancy/" target="_blank">https://www.linkedin.com/company/relu-consultancy/</a></p>
+            <h2>Company Details</h2>
+            <p><span class="data-label">Company Name:</span> <span class="data-value" contenteditable="true">Relu Consultancy</span></p>
+            <p><span class="data-label">Apollo.io Industry Label:</span> <span class="data-value" contenteditable="true">(Information not publicly available)</span></p>
+            <p><span class="data-label">Estimated Employee Count:</span> <span class="data-value" contenteditable="true">51-200 (Based on LinkedIn data)</span></p>
+            <p><span class="data-label">LinkedIn Company URL:</span> <span class="data-value" contenteditable="true">https://www.linkedin.com/company/relu-consultancy</span></p>
+            <p><span class="data-label">Ideal Buyer Locations:</span> <span class="data-value" contenteditable="true">United Kingdom (Based on company location)</span></p>
+            <p><span class="data-label">Ideal Customer Size Filters:</span> <span class="data-value" contenteditable="true">(Specific ideal customer size filters not explicitly stated on public profiles)</span></p>
         </section>
 
         <section>
-            <h2>Company Overview (Business Development Context)</h2>
-            <p contenteditable="true">Relu Consultancy specializes in helping businesses navigate complex change and improve operational efficiency. They offer expert services in areas like business process improvement, digital transformation, and strategic change management. Their value proposition centers on delivering practical, sustainable solutions that enhance performance and facilitate smooth transitions for their clients.</p>
+            <h2>Company Summary</h2>
+            <div class="data-value editable-block" contenteditable="true">
+                Relu Consultancy helps businesses unlock the power of their data to drive insights and accelerate growth. They provide expert services in data strategy, business intelligence, and cloud data platforms. By leveraging advanced analytics and digital transformation techniques, Relu enables clients to make informed decisions and build scalable data solutions. Their goal is to turn complex data into clear, actionable business value.
+            </div>
         </section>
 
-        <section>
+         <section>
+            <h2>LinkedIn Company Description</h2>
+             <div class="data-value editable-block" contenteditable="true">
+                Relu is a Data, Analytics, and AI Consultancy, delivering end to end Data-Led Transformations. Our mission is to help our clients make better decisions and unlock the power of their data and AI assets to drive business growth and innovation. We are passionate about delivering real business value and helping our clients navigate the complexity of data, analytics, and AI technologies. Our team of experts specialises in designing, building, and implementing cutting-edge data solutions, including Business Intelligence, Data Engineering, Data Science, Cloud Data Platforms, and Data Strategy. We work with clients across a range of industries and help them achieve their business objectives by transforming their data into actionable insights. We are committed to providing exceptional service and support to our clients, and we are proud of our reputation for delivering high-quality, impactful data solutions.
+            </div>
+        </section>
+
+        <section id="services-section">
             <h2>Services Offered</h2>
-            <p><span class="label">From LinkedIn:</span> Change Management, Business Process Improvement, Digital Transformation, Programme Management, Portfolio Management, Project Management, Consulting, Training.</p>
-            <h3>Key Services (Editable & Rearrangeable)</h3>
             <ul id="services-list">
-                <li contenteditable="true" draggable="true">Business Process Improvement</li>
-                <li contenteditable="true" draggable="true">Digital Transformation</li>
-                <li contenteditable="true" draggable="true">Change Management</li>
-                <li contenteditable="true" draggable="true">Programme/Project Management</li>
-                <li contenteditable="true" draggable="true">Strategic Consulting</li>
+                <li draggable="true"><span class="list-item-content" contenteditable="true">Data Strategy</span><button class="delete-btn" title="Delete Service">×</button></li>
+                <li draggable="true"><span class="list-item-content" contenteditable="true">BI & Analytics</span><button class="delete-btn" title="Delete Service">×</button></li>
+                <li draggable="true"><span class="list-item-content" contenteditable="true">AI & Machine Learning</span><button class="delete-btn" title="Delete Service">×</button></li>
+                <li draggable="true"><span class="list-item-content" contenteditable="true">Data Engineering</span><button class="delete-btn" title="Delete Service">×</button></li>
+                <li draggable="true"><span class="list-item-content" contenteditable="true">Cloud Data Platforms</span><button class="delete-btn" title="Delete Service">×</button></li>
+                <li draggable="true"><span class="list-item-content" contenteditable="true">Digital Transformation</span><button class="delete-btn" title="Delete Service">×</button></li>
             </ul>
-            <button class="add-new-btn" onclick="addListItem('services-list', 'New Service')">Add New Service</button>
+            <div class="add-item-form">
+                <input type="text" id="new-service" placeholder="Add new service">
+                <button onclick="addItem('services-list', 'new-service')">Add Service</button>
+            </div>
         </section>
 
-        <section>
-            <h2>Target Market Analysis</h2>
-
-            <h3>Ranked Target Industries (Editable & Rearrangeable)</h3>
+        <section id="industries-section">
+            <h2>Target Industries</h2>
+             <p><span class="data-label">Note:</span> <span class="data-value" contenteditable="true">(Specific target industries or priority ranking not explicitly stated on public profiles)</span></p>
             <ul id="industries-list">
-                <li contenteditable="true" draggable="true">1. Financial Services</li>
-                <li contenteditable="true" draggable="true">2. Healthcare</li>
-                <li contenteditable="true" draggable="true">3. Professional Services</li>
-                <li contenteditable="true" draggable="true">4. Technology</li>
-                <li contenteditable="true" draggable="true">5. Manufacturing</li>
-                <li contenteditable="true" draggable="true">6. Retail</li>
+                 <!-- Add initial industries here or leave empty -->
+                 <!-- Example: <li draggable="true"><span class="list-item-content" contenteditable="true">Financial Services</span><button class="delete-btn" title="Delete Industry">×</button></li> -->
             </ul>
-             <button class="add-new-btn" onclick="addListItem('industries-list', 'New Industry')">Add New Industry</button>
-
-            <h3>Ideal Customer Company Sizes (Apollo Filters)</h3>
-            <p contenteditable="true">Ideal sizes likely include companies large enough to need structured change and process work but potentially overlooked by larger consultancies. Potential sweet spots: 51-200, 201-500, 501-1000 employees. Can also target larger enterprises for specific divisional projects or smaller businesses (11-50) for focused process improvements.</p>
-
-            <h3>Ideal Buyer Locations</h3>
-            <p contenteditable="true">Based on current focus: United Kingdom. Potential expansion or remote work targets: Western Europe, potentially North America.</p>
-
-            <h3>Relevant Apollo.io Buyer Intent Keywords (Editable)</h3>
-            <ul id="keywords-list">
-                <li contenteditable="true">business process consulting</li>
-                <li contenteditable="true">digital transformation services</li>
-                <li contenteditable="true">change management consultant</li>
-                <li contenteditable="true">operational efficiency improvement</li>
-                <li contenteditable="true">ERP implementation help</li>
-                <li contenteditable="true">process automation consultant</li>
-                <li contenteditable="true">business process re-engineering</li>
-            </ul>
-             <button class="add-new-btn" onclick="addListItem('keywords-list', 'New Keyword')">Add New Keyword</button>
+             <div class="add-item-form">
+                <input type="text" id="new-industry" placeholder="Add new industry">
+                <button onclick="addItem('industries-list', 'new-industry')">Add Industry</button>
+            </div>
         </section>
 
-        <section>
-            <h2>Apollo Contact List Targeting Guidance</h2>
-            <p contenteditable="true">To create target contact lists in Apollo.io, use the gathered ICP data: Filter by industries (Financial Services, Healthcare, etc.), company sizes (select multiple ranges like 51-200, 201-500), and locations (United Kingdom, Western Europe). Further refine lists using buyer intent keywords. Look for roles involved in operations, strategy, change, digital transformation, or IT leadership (e.g., COO, Head of Change, Digital Transformation Lead, IT Director, Process Improvement Manager).</p>
+         <section id="keywords-section">
+            <h2>Relevant Apollo.io Buyer Intent Keywords</h2>
+             <!-- Keywords are not specified as reorderable, so they are not draggable -->
+            <ul id="keywords-list">
+                <li><span class="list-item-content" contenteditable="true">Business Intelligence Consulting</span><button class="delete-btn" title="Delete Keyword">×</button></li>
+                <li><span class="list-item-content" contenteditable="true">Data Analytics Services</span><button class="delete-btn" title="Delete Keyword">×</button></li>
+                <li><span class="list-item-content" contenteditable="true">Cloud Data Platform Implementation</span><button class="delete-btn" title="Delete Keyword">×</button></li>
+                <li><span class="list-item-content" contenteditable="true">Data Strategy Consulting</span><button class="delete-btn" title="Delete Keyword">×</button></li>
+                <li><span class="list-item-content" contenteditable="true">Digital Transformation Consulting</span><button class="delete-btn" title="Delete Keyword">×</button></li>
+                <li><span class="list-item-content" contenteditable="true">AI Consulting Services</span><button class="delete-btn" title="Delete Keyword">×</button></li>
+                <li><span class="list-item-content" contenteditable="true">Data Engineering Solutions</span><button class="delete-btn" title="Delete Keyword">×</button></li>
+            </ul>
+             <div class="add-item-form">
+                <input type="text" id="new-keyword" placeholder="Add new keyword">
+                <button onclick="addItem('keywords-list', 'new-keyword')">Add Keyword</button>
+            </div>
         </section>
 
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Make paragraphs editable
-            document.querySelectorAll('p[contenteditable="true"]').forEach(p => {
-                // Add focus/blur events for potential styling changes
-                p.addEventListener('focus', () => p.style.borderColor = '#007bff');
-                p.addEventListener('blur', () => p.style.borderColor = 'transparent');
+        // Drag and Drop Functionality
+        let draggedItem = null;
+
+        document.querySelectorAll('#services-list, #industries-list').forEach(list => {
+            list.addEventListener('dragstart', (e) => {
+                // Check if the actual li element is being dragged, not its children
+                if (e.target.tagName === 'LI' && list.contains(e.target)) {
+                    draggedItem = e.target;
+                    // Use a timeout to allow the browser's drag image to be set
+                    setTimeout(() => {
+                        draggedItem.classList.add('dragging');
+                    }, 0);
+                } else {
+                    // If a child element initiated the drag, prevent default
+                    e.preventDefault();
+                }
             });
 
-            // Add drag-and-drop and remove functionality to list items
-            document.querySelectorAll('ul').forEach(ul => {
-                ul.addEventListener('click', (event) => {
-                    if (event.target.classList.contains('remove-item')) {
-                        event.target.closest('li').remove();
-                    }
-                });
+            list.addEventListener('dragend', (e) => {
+                 if (draggedItem) {
+                     draggedItem.classList.remove('dragging');
+                     draggedItem = null;
+                 }
+            });
 
-                // Add remove button to existing items
-                ul.querySelectorAll('li').forEach(li => {
-                     if (!li.querySelector('.list-controls')) {
-                        addRemoveButton(li);
+            list.addEventListener('dragover', (e) => {
+                e.preventDefault(); // Allow dropping
+                 if (!draggedItem || !list.contains(draggedItem)) return; // Only handle drops of items from THIS list type
+
+                let targetItem = e.target.closest('li'); // Find the closest li element the cursor is over
+
+                 // If dragging over an empty list or whitespace within the list
+                if (!targetItem && e.target === list) {
+                    list.appendChild(draggedItem);
+                    return;
+                }
+
+                 // Ensure the target is a list item within the *same* list and not the item being dragged
+                 if (targetItem && targetItem !== draggedItem && list.contains(targetItem)) {
+                     const boundingBox = targetItem.getBoundingClientRect();
+                     // Determine if the cursor is in the upper or lower half of the target item
+                     const offset = boundingBox.y + (boundingBox.height / 2);
+
+                     if (e.clientY < offset) {
+                         // Cursor is in the upper half, insert before the target
+                         list.insertBefore(draggedItem, targetItem);
+                     } else {
+                         // Cursor is in the lower half, insert after the target
+                         list.insertBefore(draggedItem, targetItem.nextSibling);
                      }
-                });
+                 }
+            });
 
-                // Drag and drop functionality
-                let draggedItem = null;
-
-                ul.addEventListener('dragstart', (event) => {
-                    draggedItem = event.target;
-                    if (draggedItem.tagName === 'LI') {
-                         setTimeout(() => {
-                            draggedItem.classList.add('dragged');
-                         }, 0); // Allow element to be copied before hiding
-                         event.dataTransfer.effectAllowed = 'move';
-                         event.dataTransfer.setData('text/html', draggedItem.innerHTML); // Required for Firefox
-                    } else {
-                        event.preventDefault(); // Only allow LI to be draggable
-                    }
-                });
-
-                 ul.addEventListener('dragover', (event) => {
-                    event.preventDefault(); // Necessary to allow dropping
-                    event.dataTransfer.dropEffect = 'move';
-
-                    const targetItem = event.target.closest('li');
-                    if (targetItem && targetItem !== draggedItem) {
-                        const boundingBox = targetItem.getBoundingClientRect();
-                        const offset = boundingBox.y + (boundingBox.height / 2);
-                        if (event.clientY > offset) {
-                            // Dragging below the target item
-                            targetItem.parentNode.insertBefore(draggedItem, targetItem.nextSibling);
-                        } else {
-                            // Dragging above the target item
-                            targetItem.parentNode.insertBefore(draggedItem, targetItem);
-                        }
-                    }
-                });
-
-                 ul.addEventListener('dragleave', (event) => {
-                     // Optional: Add visual feedback when dragging leaves an area
-                 });
-
-                ul.addEventListener('dragend', (event) => {
-                    if (draggedItem) {
-                        draggedItem.classList.remove('dragged');
-                        draggedItem = null;
-                    }
-                });
-
-                ul.addEventListener('drop', (event) => {
-                    event.preventDefault();
-                    // Dragover handles the actual insertion, drop just finalizes (if needed)
-                    // No extra steps needed here for this simple case as dragover handles placement
-                });
+             // Prevent dropping onto elements within the list items that aren't the list item itself
+            list.addEventListener('drop', (e) => {
+                 e.preventDefault();
+                 // Dragover handles the actual insertion, drop just prevents default browser handling
             });
         });
 
-        function addRemoveButton(li) {
-             if (!li.querySelector('.list-controls')) {
-                const controls = document.createElement('span');
-                controls.classList.add('list-controls');
-                const removeButton = document.createElement('button');
-                removeButton.classList.add('remove-item');
-                removeButton.innerHTML = '&times;'; // Times symbol
-                removeButton.setAttribute('title', 'Remove item');
-                controls.appendChild(removeButton);
-                li.appendChild(controls);
-             }
+        // Add Item Functionality
+        function addItem(listId, inputId) {
+            const list = document.getElementById(listId);
+            const input = document.getElementById(inputId);
+            const itemText = input.value.trim();
+
+            if (itemText) {
+                const newItem = document.createElement('li');
+                // Only make draggable if it's one of the reorderable lists
+                if (listId === 'services-list' || listId === 'industries-list') {
+                    newItem.setAttribute('draggable', 'true');
+                }
+
+                const contentSpan = document.createElement('span');
+                contentSpan.classList.add('list-item-content');
+                contentSpan.setAttribute('contenteditable', 'true');
+                contentSpan.textContent = itemText;
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.classList.add('delete-btn');
+                deleteBtn.textContent = '×';
+                deleteBtn.setAttribute('title', 'Delete ' + listId.replace('-list', '').slice(0, -1)); // Add helpful title
+
+                newItem.appendChild(contentSpan);
+                newItem.appendChild(deleteBtn);
+                list.appendChild(newItem);
+
+                input.value = ''; // Clear input field
+            }
         }
 
-
-        function addListItem(ulId, defaultText = 'New Item') {
-            const ul = document.getElementById(ulId);
-            const li = document.createElement('li');
-            li.setAttribute('contenteditable', 'true');
-            if (ulId !== 'keywords-list') { // Keywords don't need to be reordered typically
-                 li.setAttribute('draggable', 'true');
+        // Delete Item Functionality (Event delegation for existing and future buttons)
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('delete-btn')) {
+                const listItem = e.target.closest('li');
+                if (listItem) {
+                    listItem.remove();
+                }
             }
-            li.textContent = defaultText;
+        });
 
-            // Add remove button
-            addRemoveButton(li);
+         // Make initial list items draggable for Services and Industries
+         document.querySelectorAll('#services-list li, #industries-list li').forEach(item => {
+             item.setAttribute('draggable', 'true');
+         });
 
-            ul.appendChild(li);
+         // Prevent drag for keyword list items (not requested to be reorderable)
+          document.querySelectorAll('#keywords-list li').forEach(item => {
+             item.setAttribute('draggable', 'false'); // Explicitly set to false
+             item.style.cursor = 'default'; // Change cursor
+         });
 
-            // Add drag-and-drop event listeners to the new item if applicable
-            if (ulId !== 'keywords-list') {
-                let draggedItem = null; // Need to manage state per drag
-                 li.addEventListener('dragstart', (event) => {
-                    draggedItem = event.target;
-                     setTimeout(() => {
-                        draggedItem.classList.add('dragged');
-                     }, 0);
-                     event.dataTransfer.effectAllowed = 'move';
-                     event.dataTransfer.setData('text/html', draggedItem.innerHTML);
-                 });
-
-                  li.addEventListener('dragend', (event) => {
-                    if (draggedItem) {
-                        draggedItem.classList.remove('dragged');
-                        draggedItem = null;
-                    }
-                 });
-            }
-
-             // Auto-focus the new item for editing
-             li.focus();
-        }
 
     </script>
+
 </body>
 </html>
