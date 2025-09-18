@@ -4,737 +4,683 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tesla Sales Development Due Diligence Report</title>
-    <!-- Chart.js CDN for graphs -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Mermaid CDN for diagrams -->
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Inline CSS for the entire report -->
     <style>
-        /* Inline CSS for the entire report */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            padding: 0;
+            padding: 20px;
             background-color: #f4f7f6;
             color: #333;
             line-height: 1.6;
         }
         .container {
-            width: 90%;
             max-width: 1200px;
-            margin: 20px auto;
+            margin: 0 auto;
             background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            padding: 30px;
+            padding: 30px 50px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
         }
         header {
             text-align: center;
-            padding-bottom: 20px;
-            border-bottom: 3px solid #e62020;
-            margin-bottom: 30px;
-        }
-        header h1 {
-            color: #e62020;
-            margin: 0;
-            font-size: 2.8em;
-            letter-spacing: 1px;
-        }
-        header p {
-            font-size: 1.2em;
-            color: #555;
-            margin-top: 10px;
-        }
-        section {
+            padding-bottom: 25px;
             margin-bottom: 40px;
-            padding-bottom: 20px;
-            border-bottom: 1px dashed #eee;
+            border-bottom: 3px solid #e0e0e0;
         }
-        section:last-of-type {
-            border-bottom: none;
+        h1 {
+            color: #cc0000; /* Tesla red-like color */
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
         }
         h2 {
             color: #2c3e50;
-            font-size: 2.2em;
-            border-left: 5px solid #e62020;
-            padding-left: 15px;
-            margin-bottom: 25px;
-            margin-top: 0;
+            font-size: 2em;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 80px;
+            height: 2px;
+            background-color: #cc0000;
         }
         h3 {
             color: #34495e;
-            font-size: 1.6em;
+            font-size: 1.5em;
+            margin-top: 30px;
             margin-bottom: 15px;
-            border-bottom: 1px solid #f0f0f0;
-            padding-bottom: 5px;
         }
         p {
             margin-bottom: 15px;
-            color: #555;
-            font-size: 1.05em;
+            text-align: justify;
         }
-        ul {
-            list-style-type: none;
-            padding-left: 0;
-            margin-bottom: 20px;
+        ul, ol {
+            margin-bottom: 15px;
+            padding-left: 25px;
         }
-        ul li {
-            background-color: #f9f9f9;
+        li {
             margin-bottom: 8px;
-            padding: 12px 15px;
-            border-left: 4px solid #e62020;
-            border-radius: 4px;
-            font-size: 1.05em;
-            color: #444;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 25px;
-            background-color: #fff;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            border-radius: 8px;
-            overflow: hidden; /* Ensures rounded corners apply to content */
-        }
-        th, td {
-            border: 1px solid #e0e0e0;
-            padding: 12px 15px;
-            text-align: left;
-            font-size: 0.95em;
-        }
-        th {
-            background-color: #e62020;
-            color: white;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        tr:nth-child(even) {
-            background-color: #f7f7f7;
-        }
-        tr:hover {
-            background-color: #f0f0f0;
-        }
-        .chart-container {
-            width: 100%;
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fdfdfd;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-        }
-        .mermaid {
-            background-color: #fdfdfd;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-            text-align: center;
-            margin: 20px auto;
-            max-width: 90%;
-            overflow-x: auto;
-        }
-        .highlight {
-            background-color: #fff3cd;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-weight: bold;
-            color: #856404;
-        }
-        footer {
-            text-align: center;
-            padding-top: 20px;
-            margin-top: 40px;
-            border-top: 1px solid #eee;
-            color: #777;
+            margin: 25px 0;
             font-size: 0.9em;
+            min-width: 400px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            overflow: hidden; /* Ensures rounded corners apply */
+        }
+        table thead tr {
+            background-color: #cc0000;
+            color: #ffffff;
+            text-align: left;
+        }
+        table th, table td {
+            padding: 12px 15px;
+            border: 1px solid #dddddd;
+        }
+        table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+        table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+        table tbody tr:last-of-type {
+            border-bottom: 2px solid #cc0000;
+        }
+        table tbody tr:hover {
+            background-color: #f1f1f1;
+            cursor: pointer;
         }
 
-        /* Interactive List Specific Styles */
-        .interactive-list-container {
-            background-color: #fdfdfd;
-            padding: 25px;
+        .chart-container {
+            margin: 30px 0;
+            background-color: #f9f9f9;
+            padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-            margin-top: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         }
-        .draggable-list {
+        canvas {
+            width: 100% !important; /* Ensure canvas scales */
+            height: auto !important;
+        }
+        .mermaid-container {
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+        .mermaid {
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 5px;
+            display: inline-block; /* Center the diagram if smaller than container */
+            margin: auto;
+            max-width: 100%;
+            overflow-x: auto; /* For larger diagrams */
+        }
+
+        /* Interactive List Styling */
+        .interactive-list-section {
+            margin-top: 40px;
+            padding: 25px;
+            background-color: #eaf4f7;
+            border-radius: 10px;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        #priorityList {
             list-style: none;
             padding: 0;
-            margin: 0;
-            min-height: 50px; /* To make it visible even when empty */
-            border: 1px dashed #ccc;
+            margin-top: 20px;
+            min-height: 100px; /* To make it visible for drag/drop when empty */
+            border: 1px dashed #a0dbe8;
             border-radius: 5px;
-            padding: 10px;
+            background-color: #ffffff;
         }
-        .draggable-list li {
-            background-color: #fff;
-            border: 1px solid #ddd;
+        #priorityList li {
+            background-color: #ffffff;
+            border: 1px solid #d0e8ef;
             padding: 12px 15px;
             margin-bottom: 8px;
+            border-radius: 6px;
             cursor: grab;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-radius: 4px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-            transition: background-color 0.2s ease, box-shadow 0.2s ease;
-            font-size: 1.05em;
-            color: #333;
+            transition: background-color 0.2s ease, transform 0.2s ease;
         }
-        .draggable-list li:hover {
-            background-color: #f5f5f5;
+        #priorityList li:hover {
+            background-color: #f8fcfd;
         }
-        .draggable-list li.dragging {
-            opacity: 0.5;
-            border: 2px dashed #e62020;
-            background-color: #ffe0e0;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        #priorityList li.dragging {
+            opacity: 0.7;
+            border-color: #cc0000;
+            transform: scale(1.02);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
-        .draggable-list li.drag-over {
-            background-color: #e0f2f7; /* Highlight drop target */
-        }
-        .draggable-list li .delete-btn {
-            background-color: #e62020;
+        .delete-btn {
+            background-color: #e74c3c;
             color: white;
             border: none;
-            border-radius: 50%;
-            width: 28px;
-            height: 28px;
-            font-size: 0.9em;
+            padding: 6px 10px;
+            border-radius: 4px;
             cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: background-color 0.2s;
+            font-size: 0.9em;
+            transition: background-color 0.2s ease;
         }
-        .draggable-list li .delete-btn:hover {
-            background-color: #cc0000;
+        .delete-btn:hover {
+            background-color: #c0392b;
         }
-        .add-item-controls {
+        .add-item-container {
             display: flex;
-            margin-top: 20px;
             gap: 10px;
+            margin-top: 15px;
         }
-        .add-item-controls input[type="text"] {
+        #newItemInput {
             flex-grow: 1;
             padding: 10px 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            border: 1px solid #a0dbe8;
+            border-radius: 5px;
             font-size: 1em;
         }
-        .add-item-controls button {
-            padding: 10px 18px;
-            background-color: #e62020;
+        #newItemInput:focus {
+            outline: none;
+            border-color: #cc0000;
+            box-shadow: 0 0 0 2px rgba(204, 0, 0, 0.2);
+        }
+        .add-btn {
+            background-color: #2ecc71;
             color: white;
             border: none;
-            border-radius: 4px;
+            padding: 10px 18px;
+            border-radius: 5px;
             cursor: pointer;
             font-size: 1em;
-            transition: background-color 0.2s;
+            transition: background-color 0.2s ease;
         }
-        .add-item-controls button:hover {
-            background-color: #cc0000;
+        .add-btn:hover {
+            background-color: #27ae60;
+        }
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 25px;
+            border-top: 1px solid #e0e0e0;
+            color: #777;
+            font-size: 0.9em;
+        }
+        .note {
+            font-style: italic;
+            color: #666;
+            margin-top: 10px;
+            font-size: 0.9em;
+            text-align: center;
         }
     </style>
 </head>
 <body>
+
     <div class="container">
         <header>
-            <h1>Tesla Sales Development Due Diligence Report</h1>
-            <p>Comprehensive Analysis for Strategic Sales Growth</p>
+            <h1 style="color: #cc0000; display: flex; align-items: center; justify-content: center; gap: 15px;">
+                <img src="https://www.tesla.com/themes/custom/tesla_frontend/assets/favicons/favicon.ico" alt="Tesla Logo" style="height: 45px; width: 45px;">
+                Tesla Sales Development Due Diligence Report
+            </h1>
+            <p style="font-size: 1.2em; color: #555;">An in-depth analysis of Tesla's sales strategies, market position, and growth opportunities.</p>
+            <p style="font-size: 0.9em; color: #888;">Report Date: <span id="reportDate"></span></p>
         </header>
 
         <section>
             <h2>1. Executive Summary</h2>
             <p>
-                This due diligence report provides a comprehensive analysis of Tesla's sales development capabilities, strategies, and market position. Tesla, a global leader in electric vehicles (EVs) and clean energy, operates a <span class="highlight">unique direct-to-consumer sales model</span> that differentiates it from traditional automotive manufacturers. Key strengths include a powerful brand, innovative product portfolio, advanced technology, and a proprietary charging infrastructure (Supercharger network).
-            </p>
-            <p>
-                While Tesla has demonstrated exceptional growth, its sales development faces challenges such as increasing competition, regulatory hurdles in various markets affecting its direct sales model, and the need to scale service and delivery infrastructure globally. The company's future sales success hinges on its ability to effectively launch new products (e.g., Cybertruck, Roadster 2), expand into emerging markets, optimize its direct sales and service network, and continue leveraging its software and AI capabilities (FSD).
+                Tesla, Inc. (NASDAQ: TSLA) has revolutionized the automotive industry with its pioneering electric vehicles (EVs) and direct-to-consumer sales model. This report provides a comprehensive due diligence review of Tesla's sales development, focusing on its unique approach, market positioning, competitive landscape, and future growth trajectories. While facing increasing competition and macroeconomic headwinds, Tesla maintains a dominant brand presence and an integrated ecosystem (vehicles, charging, software, energy) that underpins its sales strategy. Key strengths include brand loyalty, technological leadership, and a robust Supercharger network. Challenges involve production scalability, regulatory hurdles for direct sales, and intensifying market competition. Opportunities lie in market expansion, new product introductions, and leveraging recurring software revenues.
             </p>
         </section>
 
         <section>
-            <h2>2. Market Overview & Trends</h2>
-            <h3>2.1 Global EV Market Growth</h3>
+            <h2>2. Company Overview</h2>
             <p>
-                The global electric vehicle market is experiencing exponential growth, driven by environmental concerns, government incentives, and advancements in battery technology. Forecasts indicate continued rapid expansion, presenting a massive opportunity for Tesla.
+                Tesla, founded in 2003, aims to accelerate the world's transition to sustainable energy. Beyond electric vehicles, Tesla is deeply invested in battery storage, solar energy generation, and artificial intelligence, particularly through its Full Self-Driving (FSD) software. The company's vertically integrated structure allows for significant control over its supply chain, manufacturing, and customer experience, directly impacting its sales development capabilities.
+            </p>
+        </section>
+
+        <section>
+            <h2>3. Sales Model & Strategy</h2>
+            <h3>3.1 Direct-to-Consumer (DTC) Model</h3>
+            <p>
+                Tesla's sales strategy is fundamentally different from traditional automakers, operating almost exclusively through a direct-to-consumer model. This bypasses the traditional dealership network, offering several advantages and challenges:
+            </p>
+            <ul>
+                <li><strong>Advantages:</strong>
+                    <ul>
+                        <li><strong>Customer Control:</strong> Tesla maintains full control over pricing, inventory, and customer experience.</li>
+                        <li><strong>Higher Margins:</strong> Eliminates dealer markups, potentially leading to better profitability or more competitive pricing.</li>
+                        <li><strong>Brand Consistency:</strong> Ensures a unified brand message and experience across all touchpoints.</li>
+                        <li><strong>Direct Feedback:</strong> Enables direct communication with customers for product improvements and service.</li>
+                    </ul>
+                </li>
+                <li><strong>Challenges:</strong>
+                    <ul>
+                        <li><strong>Regulatory Hurdles:</strong> Many U.S. states have laws protecting franchised dealerships, restricting Tesla's ability to sell directly. This forces hybrid approaches in some regions (e.g., showrooms for education, online for purchase).</li>
+                        <li><strong>Infrastructure Costs:</strong> Tesla bears the full cost of sales infrastructure (showrooms, service centers).</li>
+                        <li><strong>Limited Reach:</strong> Fewer physical locations compared to traditional dealer networks can limit visibility and test drive opportunities.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>3.2 Online Ordering & Showrooms</h3>
+            <p>
+                The primary sales channel is online, where customers configure and purchase vehicles directly. Physical "Tesla Stores" or "Galleries" serve as educational and experience centers rather than traditional sales dealerships, often located in high-traffic urban areas to maximize brand exposure.
+            </p>
+
+            <h3>3.3 Service & Charging Ecosystem as Sales Enablers</h3>
+            <p>
+                Tesla's extensive Supercharger network and its growing mobile service and service center footprint are crucial sales enablers. The promise of convenient charging alleviates "range anxiety," a key barrier for EV adoption. The service infrastructure supports customer confidence in EV ownership.
+            </p>
+
+            <h3>3.4 Software & Subscription Revenue</h3>
+            <p>
+                The Full Self-Driving (FSD) package, premium connectivity, and future potential subscription services represent significant post-purchase revenue streams. The promise of evolving software capabilities is a unique selling proposition, influencing initial vehicle purchase decisions.
+            </p>
+            <div class="mermaid-container">
+                <h3>Tesla's Direct Sales & Ecosystem Model</h3>
+                <pre class="mermaid">
+                    graph LR
+                        A[Customer] -->|Online Order| B(Tesla Website/App)
+                        A -->|Visit| C(Tesla Store/Gallery)
+                        B --> D{Order Processing}
+                        C --> D
+                        D --> E[Vehicle Production]
+                        E --> F(Delivery Center/Mobile Delivery)
+                        F --> G[Vehicle Handover]
+                        G --> H(Ownership Experience)
+                        H --> I(Supercharger Network)
+                        H --> J(Tesla Service Centers/Mobile Service)
+                        H --> K(Over-The-Air Updates)
+                        H --> L(FSD & Software Subscriptions)
+                        I --&gt; H
+                        J --&gt; H
+                        K --&gt; H
+                        L --&gt; H
+                        style A fill:#f9f,stroke:#333,stroke-width:2px
+                        style G fill:#f9f,stroke:#333,stroke-width:2px
+                        style B fill:#e0f7fa,stroke:#333,stroke-width:1px
+                        style C fill:#e0f7fa,stroke:#333,stroke-width:1px
+                        style D fill:#c8e6c9,stroke:#333,stroke-width:1px
+                        style E fill:#ffe0b2,stroke:#333,stroke-width:1px
+                        style F fill:#c8e6c9,stroke:#333,stroke-width:1px
+                        style H fill:#bbdefb,stroke:#333,stroke-width:1px
+                        style I fill:#fff9c4,stroke:#333,stroke-width:1px
+                        style J fill:#fff9c4,stroke:#333,stroke-width:1px
+                        style K fill:#fff9c4,stroke:#333,stroke-width:1px
+                        style L fill:#fff9c4,stroke:#333,stroke-width:1px
+                </pre>
+                <p class="note"><em>Fig 1: Illustrates Tesla's unique direct sales and post-purchase ecosystem.</em></p>
+            </div>
+        </section>
+
+        <section>
+            <h2>4. Market Position & Competitors</h2>
+            <p>
+                Tesla has historically dominated the premium EV segment, but the landscape is rapidly evolving. Traditional automakers are aggressively launching new EV models, and new EV startups are emerging globally.
+            </p>
+
+            <h3>4.1 Key Competitors</h3>
+            <ul>
+                <li><strong>Traditional OEMs:</strong> Volkswagen Group (ID series, Porsche Taycan, Audi e-tron), Mercedes-Benz (EQ series), BMW (iX, i4), Ford (Mach-E, F-150 Lightning), General Motors (Ultium platform, Hummer EV, Blazer EV).</li>
+                <li><strong>New EV Startups:</strong> Lucid Motors (Air), Rivian (R1T, R1S), Nio, Xpeng, BYD (global leader by volume in some metrics).</li>
+            </ul>
+
+            <h3>4.2 Market Share Dynamics</h3>
+            <p>
+                While Tesla's absolute sales volume continues to grow, its percentage market share in the overall EV market is subject to fluctuation as more competitors enter. However, it often retains a significant lead in the North American and European premium EV markets.
             </p>
             <div class="chart-container">
-                <canvas id="evMarketGrowthChart"></canvas>
+                <h3>Global EV Market Share (Estimated Q1 2023 - Selected Players)</h3>
+                <canvas id="marketShareChart"></canvas>
+                <p class="note"><em>Fig 2: Estimated global EV market share for key players. Data is illustrative and can vary by source.</em></p>
             </div>
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    const ctx = document.getElementById('evMarketGrowthChart').getContext('2d');
-                    new Chart(ctx, {
-                        type: 'line',
-                        data: {
-                            labels: ['2020', '2021', '2022', '2023', '2024 (Est.)', '2025 (Proj.)'],
-                            datasets: [{
-                                label: 'Global EV Sales (Millions of Units)',
-                                data: [3.1, 6.5, 10.5, 14.2, 18.0, 22.5],
-                                borderColor: '#e62020',
-                                backgroundColor: 'rgba(230, 32, 32, 0.2)',
-                                borderWidth: 2,
-                                fill: true,
-                                tension: 0.3
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            plugins: {
-                                title: {
-                                    display: true,
-                                    text: 'Global Electric Vehicle Sales Growth',
-                                    font: { size: 18, weight: 'bold' }
-                                },
-                                tooltip: {
-                                    mode: 'index',
-                                    intersect: false,
-                                }
-                            },
-                            scales: {
-                                x: {
-                                    title: {
-                                        display: true,
-                                        text: 'Year'
-                                    }
-                                },
-                                y: {
-                                    title: {
-                                        display: true,
-                                        text: 'Units Sold (Millions)'
-                                    },
-                                    beginAtZero: true
-                                }
-                            }
-                        }
-                    });
-                });
-            </script>
-
-            <h3>2.2 Regional Market Penetration</h3>
-            <p>
-                Tesla has strong penetration in North America, Europe, and China, with ongoing efforts to expand into emerging markets in Asia-Pacific, Latin America, and the Middle East. Each region presents unique challenges and opportunities regarding infrastructure, competition, and consumer preferences.
-            </p>
         </section>
 
         <section>
-            <h2>3. Sales Strategy & Model Analysis</h2>
-            <h3>3.1 Direct-to-Consumer Model</h3>
+            <h2>5. Product Portfolio & Innovation</h2>
             <p>
-                Tesla's sales strategy is characterized by its <span class="highlight">direct-to-consumer (D2C) model</span>, bypassing traditional dealerships. This offers several advantages:
+                Tesla's product portfolio is relatively focused but covers key segments, complemented by ongoing innovation in battery technology, software, and autonomous driving.
             </p>
+            <h3>5.1 Current Vehicle Lineup</h3>
             <ul>
-                <li><strong>Higher Margins:</strong> Eliminates dealer markups and commissions.</li>
-                <li><strong>Brand Control:</strong> Ensures consistent brand experience and pricing.</li>
-                <li><strong>Direct Customer Feedback:</strong> Facilitates direct engagement and data collection for product improvement.</li>
-                <li><strong>Streamlined Experience:</strong> Online ordering and simplified purchasing process.</li>
+                <li><strong>Model S & X:</strong> Premium sedan and SUV, showcasing performance and luxury.</li>
+                <li><strong>Model 3 & Y:</strong> Mass-market oriented sedan and crossover, driving volume.</li>
             </ul>
-            <p>
-                However, it also presents challenges:
-            </p>
+            <h3>5.2 Future Products & Pre-Orders</h3>
             <ul>
-                <li><strong>Regulatory Hurdles:</strong> Prohibited in several US states and other regions due to franchise laws.</li>
-                <li><strong>Limited Reach:</strong> Fewer physical points of sale compared to traditional networks.</li>
-                <li><strong>High Capital Expenditure:</strong> Tesla bears the full cost of showrooms, service centers, and inventory.</li>
-            <li><strong>Scalability of Service:</strong> Direct ownership of service network requires significant investment to match production growth.</li>
+                <li><strong>Cybertruck:</strong> Disruptive electric pickup truck with significant pre-orders.</li>
+                <li><strong>Tesla Semi:</strong> Electric heavy-duty truck for commercial logistics.</li>
+                <li><strong>Next-Gen Platform (Rumored "Model 2"):</strong> Anticipated lower-cost EV, crucial for expanding market reach.</li>
             </ul>
+            <h3>5.3 Technological Edge</h3>
+            <ul>
+                <li><strong>Battery Technology:</strong> In-house battery development (4680 cells) aims for higher energy density and lower cost.</li>
+                <li><strong>Software & AI:</strong> Over-the-air updates, Full Self-Driving (FSD) efforts, and advanced infotainment systems.</li>
+                <li><strong>Manufacturing Innovation:</strong> Gigafactories, "giga-casting" for simplified manufacturing.</li>
+            </ul>
+        </section>
 
-            <h3>3.2 Sales Channels</h3>
-            <p>Tesla primarily utilizes the following sales channels:</p>
-            <table style="width:100%;">
+        <section>
+            <h2>6. Sales Performance & Trends</h2>
+            <p>
+                Tesla's sales performance is characterized by significant growth, though often impacted by production ramp-ups, supply chain challenges, and macroeconomic factors.
+            </p>
+
+            <h3>6.1 Historical Deliveries (Illustrative)</h3>
+            <table>
                 <thead>
                     <tr>
-                        <th>Channel</th>
-                        <th>Description</th>
-                        <th>Sales Development Impact</th>
+                        <th>Year</th>
+                        <th>Total Deliveries (Units)</th>
+                        <th>YoY Growth (%)</th>
+                        <th>Key Sales Driver</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><strong>Online Store</strong></td>
-                        <td>Primary channel for vehicle configuration and order placement. Available globally.</td>
-                        <td>Enables broad market reach, standardized pricing, and efficient order processing. Crucial for customer conversion.</td>
+                        <td>2019</td>
+                        <td>367,500</td>
+                        <td>50%</td>
+                        <td>Model 3 ramp-up</td>
                     </tr>
                     <tr>
-                        <td><strong>Showrooms/Galleries</strong></td>
-                        <td>Retail locations for product display, test drives, and customer education. Located in high-traffic urban areas.</td>
-                        <td>Enhances brand visibility, allows physical interaction with vehicles, drives lead generation, and supports the online sales funnel.</td>
+                        <td>2020</td>
+                        <td>499,550</td>
+                        <td>36%</td>
+                        <td>Early Model Y deliveries, Shanghai Gigafactory</td>
                     </tr>
                     <tr>
-                        <td><strong>Pop-up Stores & Events</strong></td>
-                        <td>Temporary locations or events to engage potential customers and raise awareness in new markets.</td>
-                        <td>Market testing, lead generation, and brand building in underserved or emerging areas. Agile strategy for market penetration.</td>
+                        <td>2021</td>
+                        <td>936,172</td>
+                        <td>87%</td>
+                        <td>Strong Model 3/Y demand, production scale</td>
                     </tr>
                     <tr>
-                        <td><strong>Corporate & Fleet Sales</strong></td>
-                        <td>Direct sales to businesses, rental companies, and government entities.</td>
-                        <td>Significant volume sales, especially with the expansion of electric commercial fleets (e.g., Tesla Semi).</td>
+                        <td>2022</td>
+                        <td>1,313,851</td>
+                        <td>40%</td>
+                        <td>Berlin & Austin Gigafactories ramp-up</td>
+                    </tr>
+                    <tr>
+                        <td>2023 (Est.)</td>
+                        <td>1,800,000+</td>
+                        <td>~37%</td>
+                        <td>Continued Model 3/Y demand, price adjustments</td>
                     </tr>
                 </tbody>
             </table>
+            <p class="note"><em>Table 1: Illustrative Tesla annual deliveries. Actual figures may vary slightly.</em></p>
 
-            <h3>3.3 Marketing & Brand Strategy</h3>
+            <h3>6.2 Geographical Sales Focus</h3>
             <p>
-                Tesla largely relies on a <span class="highlight">low-to-no traditional advertising model</span>, instead focusing on:
+                Tesla's primary markets are North America, China, and Europe. Each region presents unique sales dynamics and competitive pressures. Aggressive pricing strategies, especially in China, have been employed to maintain market share.
             </p>
-            <ul>
-                <li><strong>Brand Hype & Innovation:</strong> Elon Musk's public persona, product launches, and technological breakthroughs generate massive organic media coverage.</li>
-                <li><strong>Word-of-Mouth:</strong> Strong customer loyalty and advocacy drive referrals.</li>
-                <li><strong>Social Media Engagement:</strong> Active presence on platforms like X (Twitter) for announcements and direct communication.</li>
-                <li><strong>Supercharger Network:</strong> Acts as a powerful ecosystem lock-in and a direct-to-consumer service touchpoint.</li>
-            </ul>
-            <p>
-                This strategy effectively reduces customer acquisition costs but also relies heavily on continuous innovation and positive public perception.
-            </p>
-        </section>
 
-        <section>
-            <h2>4. Product Portfolio & Sales Performance</h2>
-            <h3>4.1 Vehicle Sales Performance (Illustrative Data)</h3>
+            <h3>6.3 Pricing Strategy</h3>
             <p>
-                Tesla's vehicle sales are dominated by the Model 3 and Model Y, which represent its mass-market offerings. The introduction of Cybertruck is expected to significantly boost sales in the truck segment.
+                Tesla has shown flexibility in its pricing strategy, implementing both price increases and significant price cuts in response to raw material costs, competition, and demand signals, particularly for its volume models (Model 3/Y). These adjustments directly influence sales volumes and margins.
             </p>
             <div class="chart-container">
-                <canvas id="modelSalesChart"></canvas>
-            </div>
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    const ctx = document.getElementById('modelSalesChart').getContext('2d');
-                    new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: ['Model S', 'Model 3', 'Model X', 'Model Y', 'Cybertruck (Est.)'],
-                            datasets: [{
-                                label: 'Global Deliveries (Q4 2023 - Illustrative)',
-                                data: [15000, 280000, 18000, 310000, 10000], /* Fictional numbers for illustration */
-                                backgroundColor: [
-                                    'rgba(230, 32, 32, 0.8)',
-                                    'rgba(54, 162, 235, 0.8)',
-                                    'rgba(255, 206, 86, 0.8)',
-                                    'rgba(75, 192, 192, 0.8)',
-                                    'rgba(153, 102, 255, 0.8)'
-                                ],
-                                borderColor: [
-                                    'rgba(230, 32, 32, 1)',
-                                    'rgba(54, 162, 235, 1)',
-                                    'rgba(255, 206, 86, 1)',
-                                    'rgba(75, 192, 192, 1)',
-                                    'rgba(153, 102, 255, 1)'
-                                ],
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            plugins: {
-                                title: {
-                                    display: true,
-                                    text: 'Tesla Vehicle Deliveries by Model (Illustrative Q4 2023)',
-                                    font: { size: 18, weight: 'bold' }
-                                },
-                                legend: {
-                                    display: false
-                                }
-                            },
-                            scales: {
-                                y: {
-                                    beginAtZero: true,
-                                    title: {
-                                        display: true,
-                                        text: 'Units Delivered'
-                                    }
-                                }
-                            }
-                        }
-                    });
-                });
-            </script>
-
-            <h3>4.2 Energy & Storage Sales</h3>
-            <p>
-                Beyond vehicles, Tesla's energy division (Solar Roof, Solar Panels, Powerwall, Megapack) represents a significant growth vector. Sales in this segment are driven by increasing demand for renewable energy and energy independence for homes and businesses. This segment benefits from cross-selling opportunities with vehicle owners.
-            </p>
-            <div class="chart-container">
-                <canvas id="energySalesChart"></canvas>
-            </div>
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    const ctx = document.getElementById('energySalesChart').getContext('2d');
-                    new Chart(ctx, {
-                        type: 'pie',
-                        data: {
-                            labels: ['Powerwall', 'Solar Roof', 'Solar Panels', 'Megapack/Powerpack'],
-                            datasets: [{
-                                label: 'Energy Products Revenue Share (Illustrative Q4 2023)',
-                                data: [35, 10, 20, 35], /* Fictional numbers for illustration */
-                                backgroundColor: [
-                                    'rgba(34, 139, 34, 0.8)',
-                                    'rgba(255, 165, 0, 0.8)',
-                                    'rgba(60, 179, 113, 0.8)',
-                                    'rgba(70, 130, 180, 0.8)'
-                                ],
-                                borderColor: [
-                                    'rgba(34, 139, 34, 1)',
-                                    'rgba(255, 165, 0, 1)',
-                                    'rgba(60, 179, 113, 1)',
-                                    'rgba(70, 130, 180, 1)'
-                                ],
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            plugins: {
-                                title: {
-                                    display: true,
-                                    text: 'Tesla Energy Products Revenue Share (Illustrative Q4 2023)',
-                                    font: { size: 18, weight: 'bold' }
-                                },
-                                legend: {
-                                    position: 'right',
-                                }
-                            }
-                        }
-                    });
-                });
-            </script>
-        </section>
-
-        <section>
-            <h2>5. Distribution & Logistics (Sales Enablement)</h2>
-            <h3>5.1 Supercharger Network</h3>
-            <p>
-                The proprietary Supercharger network is a critical sales enabler, alleviating range anxiety and providing a seamless charging experience. Its expansion and opening to non-Tesla EVs are strategic moves to broaden appeal and generate revenue.
-            </p>
-            <h3>5.2 Global Manufacturing & Supply Chain</h3>
-            <p>
-                Tesla's sales development is intrinsically linked to its production capabilities. Gigafactories in Fremont, Shanghai, Berlin, and Austin are crucial for meeting global demand. Supply chain efficiency directly impacts delivery times and customer satisfaction.
-            </p>
-            <div class="mermaid">
-                graph TD
-                    A[Customer Order Online] --> B{Order Processing & Fulfillment}
-                    B --> C{Vehicle Production - Gigafactories}
-                    C --> D{Quality Control & Inspection}
-                    D --> E{Logistics & Transport}
-                    E --> F{Delivery Center / Home Delivery}
-                    F --> G[Customer Handover & Onboarding]
-                    G --> H(After-Sales Service & Support)
-                    G -- Supercharger Access --> I[Charging Network Utilization]
-                    H -- Feedback Loop --> C
-                    style A fill:#e62020,stroke:#333,stroke-width:2px,color:#fff
-                    style B fill:#f9f9f9,stroke:#e0e0e0,stroke-width:1px
-                    style C fill:#5cb85c,stroke:#333,stroke-width:2px,color:#fff
-                    style F fill:#e62020,stroke:#333,stroke-width:2px,color:#fff
+                <h3>Tesla Quarterly Deliveries (Illustrative Q1 2022 - Q4 2023)</h3>
+                <canvas id="quarterlyDeliveriesChart"></canvas>
+                <p class="note"><em>Fig 3: Illustrative quarterly delivery trends for Tesla.</em></p>
             </div>
         </section>
 
         <section>
-            <h2>6. Competitive Landscape</h2>
-            <p>
-                Tesla faces increasing competition from both legacy automakers transitioning to EVs and new EV startups.
-            </p>
-            <table style="width:100%;">
-                <thead>
-                    <tr>
-                        <th>Competitor Type</th>
-                        <th>Examples</th>
-                        <th>Competitive Sales Advantage/Disadvantage</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Legacy Automakers (EV Divisions)</strong></td>
-                        <td>Volkswagen (ID series), Hyundai (IONIQ), Ford (Mach-E), Mercedes-Benz (EQ series)</td>
-                        <td><strong>Advantage:</strong> Established dealer networks, broader service reach, brand loyalty from ICE era. <strong>Disadvantage:</strong> Slower adoption of D2C, less agile innovation, reliance on traditional supply chains.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>New EV Startups</strong></td>
-                        <td>Rivian, Lucid, Nio, Xpeng, Li Auto</td>
-                        <td><strong>Advantage:</strong> Niche focus, innovative features, some also use D2C. <strong>Disadvantage:</strong> Lower production scale, less established charging/service infrastructure, higher capital requirements, limited brand recognition.</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-
-        <section>
-            <h2>7. SWOT Analysis (Sales Development Focus)</h2>
-            <div class="mermaid">
-                graph TD
-                    A[Strengths]
-                    B[Weaknesses]
-                    C[Opportunities]
-                    D[Threats]
-
-                    A --> A1(Strong Brand & Innovation)
-                    A --> A2(Proprietary Supercharger Network)
-                    A --> A3(Direct-to-Consumer Model)
-                    A --> A4(Advanced Software & FSD Potential)
-
-                    B --> B1(Dependence on Elon Musk's Persona)
-                    B --> B2(Limited Service & Delivery Infrastructure)
-                    B --> B3(Regulatory Restrictions on Direct Sales)
-                    B --> B4(Production Bottlenecks/Quality Control Challenges)
-
-                    C --> C1(Emerging Markets Expansion)
-                    C --> C2(New Product Launches: Cybertruck, Roadster, Semi)
-                    C --> C3(Energy Division Growth & Cross-Selling)
-                    C --> C4(FSD Subscriptions & Software Monetization)
-
-                    D --> D1(Intensifying Competition from Legacy & Startups)
-                    D --> D2(Geopolitical Tensions & Supply Chain Disruptions)
-                    D --> D3(Economic Downturns Affecting Premium Sales)
-                    D --> D4(Regulatory Scrutiny & Data Privacy Concerns)
-
-                    style A fill:#d4edda,stroke:#28a745,color:#155724
-                    style B fill:#fff3cd,stroke:#ffc107,color:#856404
-                    style C fill:#d1ecf1,stroke:#17a2b8,color:#0c5460
-                    style D fill:#f8d7da,stroke:#dc3545,color:#721c24
-            </div>
-        </section>
-
-        <section>
-            <h2>8. Recommendations for Sales Development</h2>
-            <p>Based on the due diligence, the following recommendations are proposed to further enhance Tesla's sales development:</p>
+            <h2>7. Key Strengths in Sales Development</h2>
             <ul>
-                <li><strong>Expand & Optimize Service Network:</strong> Invest heavily in service center expansion and mobile service fleets to improve customer experience and scalability.</li>
-                <li><strong>Strategic Showroom Expansion:</strong> Focus on high-potential urban areas while navigating regulatory restrictions with creative solutions (e.g., galleries, service-only locations).</li>
-                <li><strong>Enhance Direct Sales Advocacy:</strong> Leverage existing customer loyalty through robust referral programs and community building initiatives.</li>
-                <li><strong>Tailored Regional Strategies:</strong> Develop nuanced sales and marketing approaches for diverse international markets, considering local preferences and regulations.</li>
-                <li><strong>Diversify Lead Generation:</strong> Explore targeted digital advertising in specific segments (e.g., enterprise fleets for Semi, renewable energy for Powerwall) to complement organic growth.</li>
-                <li><strong>Fortify Supply Chain Resilience:</strong> Proactively manage supply chain risks to ensure consistent production and timely deliveries, directly impacting sales fulfillment.</li>
-                <li><strong>Monetize Charging Infrastructure:</strong> Continue opening Supercharger network to other EVs to generate additional revenue and reinforce ecosystem dominance.</li>
+                <li><strong>Brand Strength & Loyalty:</strong> Tesla possesses one of the strongest and most recognized brands in the automotive industry, fostering high customer loyalty and referral rates.</li>
+                <li><strong>Technological Leadership:</strong> Perceived advantage in battery technology, range, performance, and advanced driver-assistance systems (ADAS) like Autopilot/FSD.</li>
+                <li><strong>Direct Sales Model:</strong> Provides full control over pricing, inventory, and customer experience, leading to higher efficiency and direct engagement.</li>
+                <li><strong>Integrated Ecosystem:</strong> Supercharger network, mobile service, and energy products create a holistic and convenient ownership experience.</li>
+                <li><strong>Over-the-Air (OTA) Updates:</strong> Ability to improve vehicle features and add new functionalities post-purchase, enhancing long-term value.</li>
+                <li><strong>High Resale Value:</strong> Tesla vehicles tend to hold their value well, acting as a further incentive for purchase.</li>
             </ul>
         </section>
 
         <section>
-            <h2>9. Interactive Sales Initiatives Prioritization</h2>
-            <p>Drag and drop to prioritize sales initiatives, and add/remove items as needed.</p>
-            <div class="interactive-list-container">
-                <div class="add-item-controls">
-                    <input type="text" id="newItemInput" placeholder="Add new sales initiative">
-                    <button id="addItemBtn">Add Initiative</button>
-                </div>
-                <ul id="draggableList" class="draggable-list">
-                    <li draggable="true" data-id="1">Global Service Center Expansion <button class="delete-btn">X</button></li>
-                    <li draggable="true" data-id="2">Cybertruck Launch Marketing <button class="delete-btn">X</button></li>
-                    <li draggable="true" data-id="3">Supercharger Network Monetization <button class="delete-btn">X</button></li>
-                    <li draggable="true" data-id="4">FSD Software Subscription Drive <button class="delete-btn">X</button></li>
-                    <li draggable="true" data-id="5">Emerging Market Entry Strategy <button class="delete-btn">X</button></li>
+            <h2>8. Key Challenges & Risks for Sales Development</h2>
+            <ul>
+                <li><strong>Intensifying Competition:</strong> New EV models from legacy automakers and startups are eroding Tesla's market share advantage.</li>
+                <li><strong>Production Scalability & Quality Control:</strong> Historically, Tesla has faced challenges in ramping up production while maintaining consistent quality.</li>
+                <li><strong>Regulatory Hurdles for DTC Model:</strong> State franchise laws continue to restrict Tesla's ability to sell directly in certain U.S. markets.</li>
+                <li><strong>Dependency on Elon Musk:</strong> His controversial public statements and involvement with other ventures can impact brand perception and investor confidence.</li>
+                <li><strong>Service Network Strain:</strong> Rapid sales growth puts pressure on expanding and maintaining a high-quality service network.</li>
+                <li><strong>Macroeconomic Headwinds:</strong> High interest rates, inflation, and potential recessions can impact demand for high-value purchases like EVs.</li>
+                <li><strong>FSD Adoption & Regulatory Risks:</strong> The full realization and public acceptance of FSD remain uncertain, impacting a key sales differentiator.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>9. Growth Opportunities for Sales Development</h2>
+            <ul>
+                <li><strong>Global Market Expansion:</strong> Untapped markets (e.g., India, Southeast Asia) offer significant long-term growth potential.</li>
+                <li><strong>Lower-Cost Vehicle Introduction:</strong> A more affordable model could dramatically expand Tesla's addressable market.</li>
+                <li><strong>New Product Ramps:</strong> Successful production ramp-up of Cybertruck and Tesla Semi will open new market segments.</li>
+                <li><strong>Software & AI Monetization:</strong> Further development and widespread adoption of FSD and other subscription services can create substantial recurring revenue.</li>
+                <li><strong>Energy Integration:</strong> Leveraging synergies between vehicles, Powerwall, and Solar Roof for cross-selling opportunities.</li>
+                <li><strong>Fleet Sales & Robotaxi Network:</strong> Potential for large-scale fleet deployments and the realization of a robotaxi service (long-term vision) would drive significant volume.</li>
+                <li><strong>Supercharger Network Expansion & Monetization:</strong> Opening the Supercharger network to other EVs can generate revenue and enhance brand perception.</li>
+            </ul>
+            <div class="interactive-list-section">
+                <h3>Prioritize Tesla's Sales Growth Opportunities</h3>
+                <p>Drag and drop the items to prioritize them. You can also add or delete opportunities.</p>
+                <ul id="priorityList">
+                    <li draggable="true">Global Market Expansion</li>
+                    <li draggable="true">Lower-Cost Vehicle Introduction</li>
+                    <li draggable="true">New Product Ramps (Cybertruck, Semi)</li>
+                    <li draggable="true">Software & AI Monetization (FSD)</li>
+                    <li draggable="true">Energy Integration (Powerwall, Solar)</li>
+                    <li draggable="true">Supercharger Network Monetization</li>
+                    <li draggable="true">Fleet Sales & Robotaxi Network</li>
                 </ul>
+                <div class="add-item-container">
+                    <input type="text" id="newItemInput" placeholder="Add new opportunity">
+                    <button class="add-btn" onclick="addItem()">Add</button>
+                </div>
             </div>
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    const draggableList = document.getElementById('draggableList');
-                    const addItemBtn = document.getElementById('addItemBtn');
-                    const newItemInput = document.getElementById('newItemInput');
-                    let draggedItem = null;
-                    let nextId = 6; // To ensure unique IDs for new items
+        </section>
 
-                    function setupDragListeners(item) {
-                        item.addEventListener('dragstart', function() {
-                            draggedItem = this;
-                            setTimeout(() => this.classList.add('dragging'), 0);
-                        });
+        <section>
+            <h2>10. Recommendations</h2>
+            <ol>
+                <li><strong>Enhance Customer Service Infrastructure:</strong> Proactively expand and optimize service centers and mobile service to improve customer satisfaction and reduce wait times, crucial for retaining loyalty in a competitive market.</li>
+                <li><strong>Strategic Market-Specific Marketing:</strong> Develop targeted marketing campaigns for regions with increasing competition, moving beyond reliance on organic growth and PR.</li>
+                <li><strong>Accelerate Lower-Cost Model Development:</strong> Prioritize the development and efficient production of a more affordable EV to capture a larger segment of the global market.</li>
+                <li><strong>Fortify Charging Network Leadership:</strong> Continue aggressive expansion of the Supercharger network and explore partnerships to ensure continued competitive advantage in charging accessibility.</li>
+                <li><strong>Refine FSD Monetization & Deployment:</strong> Clearly communicate FSD progress, address regulatory concerns, and explore flexible subscription models to drive adoption and recurring revenue.</li>
+                <li><strong>Diversify Sales Channels Incrementally:</strong> While maintaining the DTC core, explore limited, strategic partnerships for fleet sales or specific market penetration where regulatory barriers are high.</li>
+            </ol>
+        </section>
 
-                        item.addEventListener('dragend', function() {
-                            this.classList.remove('dragging');
-                            draggedItem = null;
-                        });
-
-                        item.querySelector('.delete-btn').addEventListener('click', function() {
-                            item.remove();
-                        });
-                    }
-
-                    // Initial setup for existing items
-                    draggableList.querySelectorAll('li').forEach(setupDragListeners);
-
-                    draggableList.addEventListener('dragover', function(e) {
-                        e.preventDefault(); // Allow drop
-                        if (!draggedItem) return;
-
-                        const afterElement = getDragAfterElement(draggableList, e.clientY);
-                        const currentDraggingOver = document.querySelector('.drag-over');
-                        if (currentDraggingOver) {
-                            currentDraggingOver.classList.remove('drag-over');
-                        }
-
-                        if (afterElement == null) {
-                            draggableList.appendChild(draggedItem);
-                        } else {
-                            draggableList.insertBefore(draggedItem, afterElement);
-                        }
-                        if (draggedItem !== afterElement) {
-                            if (afterElement) afterElement.classList.add('drag-over');
-                        }
-                    });
-
-                    draggableList.addEventListener('dragleave', function() {
-                        const currentDraggingOver = document.querySelector('.drag-over');
-                        if (currentDraggingOver) {
-                            currentDraggingOver.classList.remove('drag-over');
-                        }
-                    });
-
-                    draggableList.addEventListener('drop', function(e) {
-                        e.preventDefault();
-                        const currentDraggingOver = document.querySelector('.drag-over');
-                        if (currentDraggingOver) {
-                            currentDraggingOver.classList.remove('drag-over');
-                        }
-                        // The item is already moved in dragover, just ensure classes are clean
-                    });
-
-                    function getDragAfterElement(container, y) {
-                        const draggableElements = [...container.querySelectorAll('li:not(.dragging)')];
-
-                        return draggableElements.reduce((closest, child) => {
-                            const box = child.getBoundingClientRect();
-                            const offset = y - box.top - box.height / 2;
-                            if (offset < 0 && offset > closest.offset) {
-                                return { offset: offset, element: child };
-                            } else {
-                                return closest;
-                            }
-                        }, { offset: -Infinity }).element;
-                    }
-
-                    addItemBtn.addEventListener('click', function() {
-                        const itemText = newItemInput.value.trim();
-                        if (itemText) {
-                            const newLi = document.createElement('li');
-                            newLi.setAttribute('draggable', 'true');
-                            newLi.setAttribute('data-id', nextId++);
-                            newLi.innerHTML = `${itemText} <button class="delete-btn">X</button>`;
-                            draggableList.appendChild(newLi);
-                            setupDragListeners(newLi);
-                            newItemInput.value = '';
-                        } else {
-                            alert('Please enter an initiative to add.');
-                        }
-                    });
-
-                    // Allow adding with Enter key
-                    newItemInput.addEventListener('keypress', function(e) {
-                        if (e.key === 'Enter') {
-                            addItemBtn.click();
-                        }
-                    });
-                });
-            </script>
+        <section>
+            <h2>11. Conclusion</h2>
+            <p>
+                Tesla remains a formidable force in the automotive industry, largely due to its innovative sales model, technological prowess, and strong brand. While its growth trajectory is impressive, the intensifying competitive landscape necessitates strategic adaptations in its sales development. By leveraging its integrated ecosystem, focusing on customer experience, and prudently expanding its product and market reach, Tesla is well-positioned to maintain its leadership and capitalize on the accelerating global transition to sustainable energy.
+            </p>
         </section>
 
         <footer>
-            <p>&copy; 2024 Business Analyst Report. All rights reserved. Data is illustrative and for demonstration purposes only.</p>
+            <p>&copy; <span id="currentYear"></span> Business Analyst Diligence Report. All rights reserved.</p>
+            <p>Disclaimer: This report is based on publicly available information and illustrative data for educational and analytical purposes.</p>
         </footer>
+
     </div>
 
-    <!-- Initialize Mermaid after content is loaded -->
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+    <!-- Mermaid.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>
+        // Initialize Mermaid
         mermaid.initialize({ startOnLoad: true });
+
+        // Set Report Date and Current Year
+        document.getElementById('reportDate').textContent = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Chart.js - Market Share Chart
+        const marketShareCtx = document.getElementById('marketShareChart').getContext('2d');
+        const marketShareChart = new Chart(marketShareCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Tesla', 'BYD', 'Volkswagen Group', 'GM', 'Geely', 'Hyundai-Kia', 'Stellantis', 'Other'],
+                datasets: [{
+                    label: 'Global EV Market Share (Q1 2023 Est.)',
+                    data: [15, 12, 10, 8, 7, 6, 4, 38], // Illustrative data
+                    backgroundColor: [
+                        '#cc0000', // Tesla Red
+                        '#3498db',
+                        '#2ecc71',
+                        '#f1c40f',
+                        '#9b59b6',
+                        '#e67e22',
+                        '#1abc9c',
+                        '#95a5a6'
+                    ],
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Estimated Global EV Market Share (Illustrative Q1 2023)',
+                        font: { size: 16, weight: 'bold' }
+                    }
+                }
+            }
+        });
+
+        // Chart.js - Quarterly Deliveries Chart
+        const deliveriesCtx = document.getElementById('quarterlyDeliveriesChart').getContext('2d');
+        const quarterlyDeliveriesChart = new Chart(deliveriesCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Q1 2022', 'Q2 2022', 'Q3 2022', 'Q4 2022', 'Q1 2023', 'Q2 2023', 'Q3 2023', 'Q4 2023'],
+                datasets: [{
+                    label: 'Tesla Quarterly Deliveries (Units)',
+                    data: [310000, 254000, 343000, 405000, 422000, 466000, 435000, 484000], // Illustrative data
+                    backgroundColor: '#cc0000',
+                    borderColor: '#a00000',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Tesla Quarterly Deliveries (Illustrative)',
+                        font: { size: 16, weight: 'bold' }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Units Delivered'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Quarter'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Interactive List (Drag & Drop, Add, Delete)
+        const priorityList = document.getElementById('priorityList');
+        let draggedItem = null;
+
+        // Add delete buttons initially to existing list items
+        document.querySelectorAll('#priorityList li').forEach(addDeleteButton);
+
+        function addDeleteButton(li) {
+            // Check if a delete button already exists to prevent duplicates
+            if (!li.querySelector('.delete-btn')) {
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'Delete';
+                deleteBtn.className = 'delete-btn';
+                deleteBtn.onclick = function(event) {
+                    event.stopPropagation(); // Prevent dragstart from firing on button click
+                    li.remove();
+                };
+                li.appendChild(deleteBtn);
+            }
+        }
+
+        function addItem() {
+            const newItemInput = document.getElementById('newItemInput');
+            const itemText = newItemInput.value.trim();
+            if (itemText) {
+                const newLi = document.createElement('li');
+                newLi.textContent = itemText;
+                newLi.draggable = true; // Ensure new items are draggable
+                addDeleteButton(newLi); // Add delete button to new item
+                priorityList.appendChild(newLi);
+                newItemInput.value = ''; // Clear input
+            }
+        }
+
+        priorityList.addEventListener('dragstart', (e) => {
+            if (e.target.tagName === 'LI') {
+                draggedItem = e.target;
+                e.target.classList.add('dragging');
+                e.dataTransfer.effectAllowed = 'move';
+                e.dataTransfer.setData('text/html', e.target.innerHTML); // Required for Firefox to show a draggable image
+            }
+        });
+
+        priorityList.addEventListener('dragover', (e) => {
+            e.preventDefault(); // Allow drop
+            const target = e.target.closest('li');
+            if (target && target !== draggedItem) {
+                const boundingBox = target.getBoundingClientRect();
+                const offset = boundingBox.y + (boundingBox.height / 2);
+                if (e.clientY < offset) {
+                    priorityList.insertBefore(draggedItem, target);
+                } else {
+                    priorityList.insertBefore(draggedItem, target.nextSibling);
+                }
+            }
+        });
+
+        priorityList.addEventListener('dragend', (e) => {
+            if (e.target.tagName === 'LI') {
+                e.target.classList.remove('dragging');
+                draggedItem = null;
+            }
+        });
     </script>
 </body>
 </html>
