@@ -1,176 +1,740 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Relu Consultancy Sales Development Due Diligence Report</title>
-<style>
-body {
-  font-family: sans-serif;
-  line-height: 1.6;
-  margin: 20px;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tesla Sales Development Due Diligence Report</title>
+    <!-- Chart.js CDN for graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Mermaid CDN for diagrams -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        /* Inline CSS for the entire report */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #e62020;
+            margin-bottom: 30px;
+        }
+        header h1 {
+            color: #e62020;
+            margin: 0;
+            font-size: 2.8em;
+            letter-spacing: 1px;
+        }
+        header p {
+            font-size: 1.2em;
+            color: #555;
+            margin-top: 10px;
+        }
+        section {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed #eee;
+        }
+        section:last-of-type {
+            border-bottom: none;
+        }
+        h2 {
+            color: #2c3e50;
+            font-size: 2.2em;
+            border-left: 5px solid #e62020;
+            padding-left: 15px;
+            margin-bottom: 25px;
+            margin-top: 0;
+        }
+        h3 {
+            color: #34495e;
+            font-size: 1.6em;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 5px;
+        }
+        p {
+            margin-bottom: 15px;
+            color: #555;
+            font-size: 1.05em;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin-bottom: 20px;
+        }
+        ul li {
+            background-color: #f9f9f9;
+            margin-bottom: 8px;
+            padding: 12px 15px;
+            border-left: 4px solid #e62020;
+            border-radius: 4px;
+            font-size: 1.05em;
+            color: #444;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-radius: 8px;
+            overflow: hidden; /* Ensures rounded corners apply to content */
+        }
+        th, td {
+            border: 1px solid #e0e0e0;
+            padding: 12px 15px;
+            text-align: left;
+            font-size: 0.95em;
+        }
+        th {
+            background-color: #e62020;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        tr:nth-child(even) {
+            background-color: #f7f7f7;
+        }
+        tr:hover {
+            background-color: #f0f0f0;
+        }
+        .chart-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fdfdfd;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+        .mermaid {
+            background-color: #fdfdfd;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            margin: 20px auto;
+            max-width: 90%;
+            overflow-x: auto;
+        }
+        .highlight {
+            background-color: #fff3cd;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #856404;
+        }
+        footer {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 40px;
+            border-top: 1px solid #eee;
+            color: #777;
+            font-size: 0.9em;
+        }
 
-h1, h2, h3 {
-  color: #333;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-}
-
-th, td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
-}
-
-th {
-  background-color: #f2f2f2;
-}
-
-.mermaid {
-  margin-top: 20px;
-}
-
-.sortable {
-  border: 1px solid #ccc;
-  padding: 10px;
-  min-height: 100px;
-}
-
-.sortable ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.sortable li {
-  cursor: move;
-  padding: 5px 10px;
-  border: 1px solid #eee;
-  margin-bottom: 5px;
-  background-color: #f9f9f9;
-}
-
-.chart-container {
-  width: 800px;
-  height: 500px;
-  margin: 20px auto;
-}
-
-.add-item {
-  display: block;
-  margin-top: 10px;
-}
-
-.delete-button{
-  float:right;
-  margin-left: 10px;
-}
-</style>
+        /* Interactive List Specific Styles */
+        .interactive-list-container {
+            background-color: #fdfdfd;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            margin-top: 30px;
+        }
+        .draggable-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            min-height: 50px; /* To make it visible even when empty */
+            border: 1px dashed #ccc;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        .draggable-list li {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            cursor: grab;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: background-color 0.2s ease, box-shadow 0.2s ease;
+            font-size: 1.05em;
+            color: #333;
+        }
+        .draggable-list li:hover {
+            background-color: #f5f5f5;
+        }
+        .draggable-list li.dragging {
+            opacity: 0.5;
+            border: 2px dashed #e62020;
+            background-color: #ffe0e0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .draggable-list li.drag-over {
+            background-color: #e0f2f7; /* Highlight drop target */
+        }
+        .draggable-list li .delete-btn {
+            background-color: #e62020;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            font-size: 0.9em;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.2s;
+        }
+        .draggable-list li .delete-btn:hover {
+            background-color: #cc0000;
+        }
+        .add-item-controls {
+            display: flex;
+            margin-top: 20px;
+            gap: 10px;
+        }
+        .add-item-controls input[type="text"] {
+            flex-grow: 1;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+        .add-item-controls button {
+            padding: 10px 18px;
+            background-color: #e62020;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.2s;
+        }
+        .add-item-controls button:hover {
+            background-color: #cc0000;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <header>
+            <h1>Tesla Sales Development Due Diligence Report</h1>
+            <p>Comprehensive Analysis for Strategic Sales Growth</p>
+        </header>
 
-<h1>Relu Consultancy Sales Development Due Diligence Report</h1>
+        <section>
+            <h2>1. Executive Summary</h2>
+            <p>
+                This due diligence report provides a comprehensive analysis of Tesla's sales development capabilities, strategies, and market position. Tesla, a global leader in electric vehicles (EVs) and clean energy, operates a <span class="highlight">unique direct-to-consumer sales model</span> that differentiates it from traditional automotive manufacturers. Key strengths include a powerful brand, innovative product portfolio, advanced technology, and a proprietary charging infrastructure (Supercharger network).
+            </p>
+            <p>
+                While Tesla has demonstrated exceptional growth, its sales development faces challenges such as increasing competition, regulatory hurdles in various markets affecting its direct sales model, and the need to scale service and delivery infrastructure globally. The company's future sales success hinges on its ability to effectively launch new products (e.g., Cybertruck, Roadster 2), expand into emerging markets, optimize its direct sales and service network, and continue leveraging its software and AI capabilities (FSD).
+            </p>
+        </section>
 
-<h2>Executive Summary</h2>
-<p>Relu Consultancy provides web scraping and automation services.  Based on their website, they have a strong track record with over 1000 projects completed,  over 1 million data points scraped, and 500+ clients served globally.  They offer pre-built APIs, customized solutions, and automation services across various industries. This report analyzes their sales development potential.</p>
+        <section>
+            <h2>2. Market Overview & Trends</h2>
+            <h3>2.1 Global EV Market Growth</h3>
+            <p>
+                The global electric vehicle market is experiencing exponential growth, driven by environmental concerns, government incentives, and advancements in battery technology. Forecasts indicate continued rapid expansion, presenting a massive opportunity for Tesla.
+            </p>
+            <div class="chart-container">
+                <canvas id="evMarketGrowthChart"></canvas>
+            </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const ctx = document.getElementById('evMarketGrowthChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: ['2020', '2021', '2022', '2023', '2024 (Est.)', '2025 (Proj.)'],
+                            datasets: [{
+                                label: 'Global EV Sales (Millions of Units)',
+                                data: [3.1, 6.5, 10.5, 14.2, 18.0, 22.5],
+                                borderColor: '#e62020',
+                                backgroundColor: 'rgba(230, 32, 32, 0.2)',
+                                borderWidth: 2,
+                                fill: true,
+                                tension: 0.3
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    text: 'Global Electric Vehicle Sales Growth',
+                                    font: { size: 18, weight: 'bold' }
+                                },
+                                tooltip: {
+                                    mode: 'index',
+                                    intersect: false,
+                                }
+                            },
+                            scales: {
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'Year'
+                                    }
+                                },
+                                y: {
+                                    title: {
+                                        display: true,
+                                        text: 'Units Sold (Millions)'
+                                    },
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                });
+            </script>
 
+            <h3>2.2 Regional Market Penetration</h3>
+            <p>
+                Tesla has strong penetration in North America, Europe, and China, with ongoing efforts to expand into emerging markets in Asia-Pacific, Latin America, and the Middle East. Each region presents unique challenges and opportunities regarding infrastructure, competition, and consumer preferences.
+            </p>
+        </section>
 
-<h2>Services Offered</h2>
-<table style="width:100%; border-collapse: collapse;">
-  <tr>
-    <th style="border: 1px solid #ddd; padding: 8px; text-align: left; background-color: #f2f2f2;">Service</th>
-    <th style="border: 1px solid #ddd; padding: 8px; text-align: left; background-color: #f2f2f2;">Description</th>
-  </tr>
-  <tr>
-    <td style="border: 1px solid #ddd; padding: 8px; text-align: left;">Pre-Built APIs</td>
-    <td style="border: 1px solid #ddd; padding: 8px; text-align: left;">Instant functionality with ready-to-go APIs.</td>
-  </tr>
-  <tr>
-    <td style="border: 1px solid #ddd; padding: 8px; text-align: left;">Customized Solutions & APIs</td>
-    <td style="border: 1px solid #ddd; padding: 8px; text-align: left;">Custom API development, including custom crawling APIs, server-hosted solutions, and bots.</td>
-  </tr>
-  <tr>
-    <td style="border: 1px solid #ddd; padding: 8px; text-align: left;">Automation</td>
-    <td style="border: 1px solid #ddd; padding: 8px; text-align: left;">Powerful natural language and AI processing capabilities for customer inquiries.</td>
-  </tr>
-</table>
+        <section>
+            <h2>3. Sales Strategy & Model Analysis</h2>
+            <h3>3.1 Direct-to-Consumer Model</h3>
+            <p>
+                Tesla's sales strategy is characterized by its <span class="highlight">direct-to-consumer (D2C) model</span>, bypassing traditional dealerships. This offers several advantages:
+            </p>
+            <ul>
+                <li><strong>Higher Margins:</strong> Eliminates dealer markups and commissions.</li>
+                <li><strong>Brand Control:</strong> Ensures consistent brand experience and pricing.</li>
+                <li><strong>Direct Customer Feedback:</strong> Facilitates direct engagement and data collection for product improvement.</li>
+                <li><strong>Streamlined Experience:</strong> Online ordering and simplified purchasing process.</li>
+            </ul>
+            <p>
+                However, it also presents challenges:
+            </p>
+            <ul>
+                <li><strong>Regulatory Hurdles:</strong> Prohibited in several US states and other regions due to franchise laws.</li>
+                <li><strong>Limited Reach:</strong> Fewer physical points of sale compared to traditional networks.</li>
+                <li><strong>High Capital Expenditure:</strong> Tesla bears the full cost of showrooms, service centers, and inventory.</li>
+            <li><strong>Scalability of Service:</strong> Direct ownership of service network requires significant investment to match production growth.</li>
+            </ul>
 
+            <h3>3.2 Sales Channels</h3>
+            <p>Tesla primarily utilizes the following sales channels:</p>
+            <table style="width:100%;">
+                <thead>
+                    <tr>
+                        <th>Channel</th>
+                        <th>Description</th>
+                        <th>Sales Development Impact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Online Store</strong></td>
+                        <td>Primary channel for vehicle configuration and order placement. Available globally.</td>
+                        <td>Enables broad market reach, standardized pricing, and efficient order processing. Crucial for customer conversion.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Showrooms/Galleries</strong></td>
+                        <td>Retail locations for product display, test drives, and customer education. Located in high-traffic urban areas.</td>
+                        <td>Enhances brand visibility, allows physical interaction with vehicles, drives lead generation, and supports the online sales funnel.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pop-up Stores & Events</strong></td>
+                        <td>Temporary locations or events to engage potential customers and raise awareness in new markets.</td>
+                        <td>Market testing, lead generation, and brand building in underserved or emerging areas. Agile strategy for market penetration.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Corporate & Fleet Sales</strong></td>
+                        <td>Direct sales to businesses, rental companies, and government entities.</td>
+                        <td>Significant volume sales, especially with the expansion of electric commercial fleets (e.g., Tesla Semi).</td>
+                    </tr>
+                </tbody>
+            </table>
 
-<h2>Target Market Analysis</h2>
-<p>Relu Consultancy targets businesses across various industries needing web scraping and automation solutions.  Key industries mentioned include:</p>
-<ul id="sortable">
-  <li>Real Estate</li>
-  <li>E-commerce</li>
-  <li>Finance</li>
-  <li>Travel</li>
-  <li>Social Media</li>
-  <li>AI</li>
-  <li>News</li>
-  <li>Sales Leads</li>
-  <li>Recruitment</li>
-</ul>
+            <h3>3.3 Marketing & Brand Strategy</h3>
+            <p>
+                Tesla largely relies on a <span class="highlight">low-to-no traditional advertising model</span>, instead focusing on:
+            </p>
+            <ul>
+                <li><strong>Brand Hype & Innovation:</strong> Elon Musk's public persona, product launches, and technological breakthroughs generate massive organic media coverage.</li>
+                <li><strong>Word-of-Mouth:</strong> Strong customer loyalty and advocacy drive referrals.</li>
+                <li><strong>Social Media Engagement:</strong> Active presence on platforms like X (Twitter) for announcements and direct communication.</li>
+                <li><strong>Supercharger Network:</strong> Acts as a powerful ecosystem lock-in and a direct-to-consumer service touchpoint.</li>
+            </ul>
+            <p>
+                This strategy effectively reduces customer acquisition costs but also relies heavily on continuous innovation and positive public perception.
+            </p>
+        </section>
 
-<div class="add-item">Add Item:<input type="text" id="newItem"><button onclick="addItem()">Add</button></div>
+        <section>
+            <h2>4. Product Portfolio & Sales Performance</h2>
+            <h3>4.1 Vehicle Sales Performance (Illustrative Data)</h3>
+            <p>
+                Tesla's vehicle sales are dominated by the Model 3 and Model Y, which represent its mass-market offerings. The introduction of Cybertruck is expected to significantly boost sales in the truck segment.
+            </p>
+            <div class="chart-container">
+                <canvas id="modelSalesChart"></canvas>
+            </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const ctx = document.getElementById('modelSalesChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Model S', 'Model 3', 'Model X', 'Model Y', 'Cybertruck (Est.)'],
+                            datasets: [{
+                                label: 'Global Deliveries (Q4 2023 - Illustrative)',
+                                data: [15000, 280000, 18000, 310000, 10000], /* Fictional numbers for illustration */
+                                backgroundColor: [
+                                    'rgba(230, 32, 32, 0.8)',
+                                    'rgba(54, 162, 235, 0.8)',
+                                    'rgba(255, 206, 86, 0.8)',
+                                    'rgba(75, 192, 192, 0.8)',
+                                    'rgba(153, 102, 255, 0.8)'
+                                ],
+                                borderColor: [
+                                    'rgba(230, 32, 32, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    text: 'Tesla Vehicle Deliveries by Model (Illustrative Q4 2023)',
+                                    font: { size: 18, weight: 'bold' }
+                                },
+                                legend: {
+                                    display: false
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Units Delivered'
+                                    }
+                                }
+                            }
+                        }
+                    });
+                });
+            </script>
 
+            <h3>4.2 Energy & Storage Sales</h3>
+            <p>
+                Beyond vehicles, Tesla's energy division (Solar Roof, Solar Panels, Powerwall, Megapack) represents a significant growth vector. Sales in this segment are driven by increasing demand for renewable energy and energy independence for homes and businesses. This segment benefits from cross-selling opportunities with vehicle owners.
+            </p>
+            <div class="chart-container">
+                <canvas id="energySalesChart"></canvas>
+            </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const ctx = document.getElementById('energySalesChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                            labels: ['Powerwall', 'Solar Roof', 'Solar Panels', 'Megapack/Powerpack'],
+                            datasets: [{
+                                label: 'Energy Products Revenue Share (Illustrative Q4 2023)',
+                                data: [35, 10, 20, 35], /* Fictional numbers for illustration */
+                                backgroundColor: [
+                                    'rgba(34, 139, 34, 0.8)',
+                                    'rgba(255, 165, 0, 0.8)',
+                                    'rgba(60, 179, 113, 0.8)',
+                                    'rgba(70, 130, 180, 0.8)'
+                                ],
+                                borderColor: [
+                                    'rgba(34, 139, 34, 1)',
+                                    'rgba(255, 165, 0, 1)',
+                                    'rgba(60, 179, 113, 1)',
+                                    'rgba(70, 130, 180, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    text: 'Tesla Energy Products Revenue Share (Illustrative Q4 2023)',
+                                    font: { size: 18, weight: 'bold' }
+                                },
+                                legend: {
+                                    position: 'right',
+                                }
+                            }
+                        }
+                    });
+                });
+            </script>
+        </section>
 
-<h2>Sales Strategy Recommendations</h2>
-<p>Relu should consider the following sales strategies:</p>
-<ul>
-  <li><strong>Targeted Content Marketing:</strong> Create blog posts, case studies, and white papers showcasing the value proposition for each target industry.</li>
-  <li><strong>Lead Generation Campaigns:</strong> Implement targeted advertising and SEO strategies to attract potential clients from key industries.</li>
-  <li><strong>Strategic Partnerships:</strong> Collaborate with complementary businesses to expand reach and credibility.</li>
-  <li><strong>Sales Team Training:</strong> Equip sales representatives with in-depth knowledge of the services and the value proposition for each industry.</li>
-</ul>
+        <section>
+            <h2>5. Distribution & Logistics (Sales Enablement)</h2>
+            <h3>5.1 Supercharger Network</h3>
+            <p>
+                The proprietary Supercharger network is a critical sales enabler, alleviating range anxiety and providing a seamless charging experience. Its expansion and opening to non-Tesla EVs are strategic moves to broaden appeal and generate revenue.
+            </p>
+            <h3>5.2 Global Manufacturing & Supply Chain</h3>
+            <p>
+                Tesla's sales development is intrinsically linked to its production capabilities. Gigafactories in Fremont, Shanghai, Berlin, and Austin are crucial for meeting global demand. Supply chain efficiency directly impacts delivery times and customer satisfaction.
+            </p>
+            <div class="mermaid">
+                graph TD
+                    A[Customer Order Online] --> B{Order Processing & Fulfillment}
+                    B --> C{Vehicle Production - Gigafactories}
+                    C --> D{Quality Control & Inspection}
+                    D --> E{Logistics & Transport}
+                    E --> F{Delivery Center / Home Delivery}
+                    F --> G[Customer Handover & Onboarding]
+                    G --> H(After-Sales Service & Support)
+                    G -- Supercharger Access --> I[Charging Network Utilization]
+                    H -- Feedback Loop --> C
+                    style A fill:#e62020,stroke:#333,stroke-width:2px,color:#fff
+                    style B fill:#f9f9f9,stroke:#e0e0e0,stroke-width:1px
+                    style C fill:#5cb85c,stroke:#333,stroke-width:2px,color:#fff
+                    style F fill:#e62020,stroke:#333,stroke-width:2px,color:#fff
+            </div>
+        </section>
 
-<h2>Competitive Analysis</h2>
-<p>(This section would require further research beyond the provided website to identify and analyze competitors.)</p>
+        <section>
+            <h2>6. Competitive Landscape</h2>
+            <p>
+                Tesla faces increasing competition from both legacy automakers transitioning to EVs and new EV startups.
+            </p>
+            <table style="width:100%;">
+                <thead>
+                    <tr>
+                        <th>Competitor Type</th>
+                        <th>Examples</th>
+                        <th>Competitive Sales Advantage/Disadvantage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Legacy Automakers (EV Divisions)</strong></td>
+                        <td>Volkswagen (ID series), Hyundai (IONIQ), Ford (Mach-E), Mercedes-Benz (EQ series)</td>
+                        <td><strong>Advantage:</strong> Established dealer networks, broader service reach, brand loyalty from ICE era. <strong>Disadvantage:</strong> Slower adoption of D2C, less agile innovation, reliance on traditional supply chains.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>New EV Startups</strong></td>
+                        <td>Rivian, Lucid, Nio, Xpeng, Li Auto</td>
+                        <td><strong>Advantage:</strong> Niche focus, innovative features, some also use D2C. <strong>Disadvantage:</strong> Lower production scale, less established charging/service infrastructure, higher capital requirements, limited brand recognition.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
 
-<h2>Financial Projections</h2>
-<p>(This section would require access to financial data not provided.)</p>
+        <section>
+            <h2>7. SWOT Analysis (Sales Development Focus)</h2>
+            <div class="mermaid">
+                graph TD
+                    A[Strengths]
+                    B[Weaknesses]
+                    C[Opportunities]
+                    D[Threats]
 
+                    A --> A1(Strong Brand & Innovation)
+                    A --> A2(Proprietary Supercharger Network)
+                    A --> A3(Direct-to-Consumer Model)
+                    A --> A4(Advanced Software & FSD Potential)
 
-<h2>Sales Process Diagram</h2>
-<div class="mermaid">
-graph LR
-  A[Lead Generation] --> B(Qualification);
-  B --> C{Proposal};
-  C -- Yes --> D[Contract];
-  C -- No --> E[Follow-up];
-  D --> F[Project Execution];
-  F --> G[Delivery &amp; Feedback];
-  G --> H[Payment];
-</div>
+                    B --> B1(Dependence on Elon Musk's Persona)
+                    B --> B2(Limited Service & Delivery Infrastructure)
+                    B --> B3(Regulatory Restrictions on Direct Sales)
+                    B --> B4(Production Bottlenecks/Quality Control Challenges)
 
+                    C --> C1(Emerging Markets Expansion)
+                    C --> C2(New Product Launches: Cybertruck, Roadster, Semi)
+                    C --> C3(Energy Division Growth & Cross-Selling)
+                    C --> C4(FSD Subscriptions & Software Monetization)
 
-<script>
-  let sortableList = document.getElementById("sortable");
-  Sortable.create(sortableList);
+                    D --> D1(Intensifying Competition from Legacy & Startups)
+                    D --> D2(Geopolitical Tensions & Supply Chain Disruptions)
+                    D --> D3(Economic Downturns Affecting Premium Sales)
+                    D --> D4(Regulatory Scrutiny & Data Privacy Concerns)
 
+                    style A fill:#d4edda,stroke:#28a745,color:#155724
+                    style B fill:#fff3cd,stroke:#ffc107,color:#856404
+                    style C fill:#d1ecf1,stroke:#17a2b8,color:#0c5460
+                    style D fill:#f8d7da,stroke:#dc3545,color:#721c24
+            </div>
+        </section>
 
-  function addItem() {
-    let newItemText = document.getElementById("newItem").value;
-    if (newItemText) {
-      let newItem = document.createElement("li");
-      newItem.textContent = newItemText;
-      newItem.innerHTML += '<button class="delete-button" onclick="deleteItem(this)">Delete</button>';
-      sortableList.appendChild(newItem);
-      document.getElementById("newItem").value = "";
-    }
-  }
+        <section>
+            <h2>8. Recommendations for Sales Development</h2>
+            <p>Based on the due diligence, the following recommendations are proposed to further enhance Tesla's sales development:</p>
+            <ul>
+                <li><strong>Expand & Optimize Service Network:</strong> Invest heavily in service center expansion and mobile service fleets to improve customer experience and scalability.</li>
+                <li><strong>Strategic Showroom Expansion:</strong> Focus on high-potential urban areas while navigating regulatory restrictions with creative solutions (e.g., galleries, service-only locations).</li>
+                <li><strong>Enhance Direct Sales Advocacy:</strong> Leverage existing customer loyalty through robust referral programs and community building initiatives.</li>
+                <li><strong>Tailored Regional Strategies:</strong> Develop nuanced sales and marketing approaches for diverse international markets, considering local preferences and regulations.</li>
+                <li><strong>Diversify Lead Generation:</strong> Explore targeted digital advertising in specific segments (e.g., enterprise fleets for Semi, renewable energy for Powerwall) to complement organic growth.</li>
+                <li><strong>Fortify Supply Chain Resilience:</strong> Proactively manage supply chain risks to ensure consistent production and timely deliveries, directly impacting sales fulfillment.</li>
+                <li><strong>Monetize Charging Infrastructure:</strong> Continue opening Supercharger network to other EVs to generate additional revenue and reinforce ecosystem dominance.</li>
+            </ul>
+        </section>
 
-  function deleteItem(button) {
-    let li = button.parentNode;
-    li.parentNode.removeChild(li);
-  }
-</script>
+        <section>
+            <h2>9. Interactive Sales Initiatives Prioritization</h2>
+            <p>Drag and drop to prioritize sales initiatives, and add/remove items as needed.</p>
+            <div class="interactive-list-container">
+                <div class="add-item-controls">
+                    <input type="text" id="newItemInput" placeholder="Add new sales initiative">
+                    <button id="addItemBtn">Add Initiative</button>
+                </div>
+                <ul id="draggableList" class="draggable-list">
+                    <li draggable="true" data-id="1">Global Service Center Expansion <button class="delete-btn">X</button></li>
+                    <li draggable="true" data-id="2">Cybertruck Launch Marketing <button class="delete-btn">X</button></li>
+                    <li draggable="true" data-id="3">Supercharger Network Monetization <button class="delete-btn">X</button></li>
+                    <li draggable="true" data-id="4">FSD Software Subscription Drive <button class="delete-btn">X</button></li>
+                    <li draggable="true" data-id="5">Emerging Market Entry Strategy <button class="delete-btn">X</button></li>
+                </ul>
+            </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const draggableList = document.getElementById('draggableList');
+                    const addItemBtn = document.getElementById('addItemBtn');
+                    const newItemInput = document.getElementById('newItemInput');
+                    let draggedItem = null;
+                    let nextId = 6; // To ensure unique IDs for new items
 
+                    function setupDragListeners(item) {
+                        item.addEventListener('dragstart', function() {
+                            draggedItem = this;
+                            setTimeout(() => this.classList.add('dragging'), 0);
+                        });
+
+                        item.addEventListener('dragend', function() {
+                            this.classList.remove('dragging');
+                            draggedItem = null;
+                        });
+
+                        item.querySelector('.delete-btn').addEventListener('click', function() {
+                            item.remove();
+                        });
+                    }
+
+                    // Initial setup for existing items
+                    draggableList.querySelectorAll('li').forEach(setupDragListeners);
+
+                    draggableList.addEventListener('dragover', function(e) {
+                        e.preventDefault(); // Allow drop
+                        if (!draggedItem) return;
+
+                        const afterElement = getDragAfterElement(draggableList, e.clientY);
+                        const currentDraggingOver = document.querySelector('.drag-over');
+                        if (currentDraggingOver) {
+                            currentDraggingOver.classList.remove('drag-over');
+                        }
+
+                        if (afterElement == null) {
+                            draggableList.appendChild(draggedItem);
+                        } else {
+                            draggableList.insertBefore(draggedItem, afterElement);
+                        }
+                        if (draggedItem !== afterElement) {
+                            if (afterElement) afterElement.classList.add('drag-over');
+                        }
+                    });
+
+                    draggableList.addEventListener('dragleave', function() {
+                        const currentDraggingOver = document.querySelector('.drag-over');
+                        if (currentDraggingOver) {
+                            currentDraggingOver.classList.remove('drag-over');
+                        }
+                    });
+
+                    draggableList.addEventListener('drop', function(e) {
+                        e.preventDefault();
+                        const currentDraggingOver = document.querySelector('.drag-over');
+                        if (currentDraggingOver) {
+                            currentDraggingOver.classList.remove('drag-over');
+                        }
+                        // The item is already moved in dragover, just ensure classes are clean
+                    });
+
+                    function getDragAfterElement(container, y) {
+                        const draggableElements = [...container.querySelectorAll('li:not(.dragging)')];
+
+                        return draggableElements.reduce((closest, child) => {
+                            const box = child.getBoundingClientRect();
+                            const offset = y - box.top - box.height / 2;
+                            if (offset < 0 && offset > closest.offset) {
+                                return { offset: offset, element: child };
+                            } else {
+                                return closest;
+                            }
+                        }, { offset: -Infinity }).element;
+                    }
+
+                    addItemBtn.addEventListener('click', function() {
+                        const itemText = newItemInput.value.trim();
+                        if (itemText) {
+                            const newLi = document.createElement('li');
+                            newLi.setAttribute('draggable', 'true');
+                            newLi.setAttribute('data-id', nextId++);
+                            newLi.innerHTML = `${itemText} <button class="delete-btn">X</button>`;
+                            draggableList.appendChild(newLi);
+                            setupDragListeners(newLi);
+                            newItemInput.value = '';
+                        } else {
+                            alert('Please enter an initiative to add.');
+                        }
+                    });
+
+                    // Allow adding with Enter key
+                    newItemInput.addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter') {
+                            addItemBtn.click();
+                        }
+                    });
+                });
+            </script>
+        </section>
+
+        <footer>
+            <p>&copy; 2024 Business Analyst Report. All rights reserved. Data is illustrative and for demonstration purposes only.</p>
+        </footer>
+    </div>
+
+    <!-- Initialize Mermaid after content is loaded -->
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
 </body>
 </html>
-```
-
-Remember to include the Mermaid.js library in your `<head>` for the diagram to render correctly.  You'll also need to include the Sortable.js library  (e.g., via CDN) for the drag-and-drop functionality.  A simple  `<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>` in the `<head>` would suffice.  Replace with the appropriate URL if necessary.  The Chart.js library would also be needed if you want to add a chart, similarly including it as a `<script>` tag.
